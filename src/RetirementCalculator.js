@@ -66,7 +66,7 @@ const RetirementCalculator = () => {
         <div className="container">
             <div className="card">
                 <div className="card-header">
-                    <div className="card-title">王工的提前退休计算器</div>
+                    <div className="card-title">王工的提前退休计算器(PC端)</div>
                 </div>
                 <div className="card-content">
                     <div className="description">
