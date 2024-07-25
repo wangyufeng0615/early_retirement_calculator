@@ -331,3 +331,8 @@ button:hover {
       font-size: 14px;
     }
 }
+
+.input-error {
+    border-color: red;
+    background-color: #ffe6e6;
+}
