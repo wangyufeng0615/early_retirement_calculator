@@ -12,6 +12,10 @@ export const calculateRetirement = (
     const yearsInRetirement = legalRetirementAge - earlyRetirementAge;
     const realReturnRate = (1 + annualReturn / 100) / (1 + inflationRate / 100) - 1;
 
+    if (yearsUntilEarlyRetirement < 0 || yearsInRetirement < 0) {
+        throw new Error('Invalid age inputs.');
+    }
+
     // Convert expected savings at legal retirement to future value
     const futureExpectedSavings = expectedSavingsAtLegalRetirement * Math.pow(1 + inflationRate / 100, yearsUntilEarlyRetirement + yearsInRetirement);
 
@@ -50,11 +54,11 @@ export const calculateRetirement = (
     let high = monthlyExpenses * 10; // Increased upper limit
     let minMonthlySavings = high;
     let finalTrajectory;
-    
+
     while (high - low > 1) {
         const mid = (low + high) / 2;
         const trajectory = calculateSavingsTrajectory(mid);
-        
+
         if (isSufficientSavings(trajectory)) {
             minMonthlySavings = mid;
             finalTrajectory = trajectory;
@@ -77,8 +81,8 @@ export const calculateRetirement = (
         expenses: Math.floor(year.expenses),
         assetReturn: Math.floor(year.savings * (annualReturn / 100)),
         inflationImpact: Math.floor(year.expenses * (inflationRate / 100)),
-        savingsChange: year.age <= earlyRetirementAge ? 
-            Math.floor(minMonthlySavings * 12) : 
+        savingsChange: year.age <= earlyRetirementAge ?
+            Math.floor(minMonthlySavings * 12) :
             Math.floor(-year.expenses),
         withdrawal: year.age > earlyRetirementAge ? Math.floor(year.expenses) : 0
     }));
