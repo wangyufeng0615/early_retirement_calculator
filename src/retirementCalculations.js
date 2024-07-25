@@ -8,12 +8,21 @@ export const calculateRetirement = (
     inflationRate,
     expectedSavingsAtLegalRetirement
 ) => {
-    const yearsUntilEarlyRetirement = earlyRetirementAge - currentAge;
-    const yearsInRetirement = legalRetirementAge - earlyRetirementAge;
+    const yearsUntilEarlyRetirement = Math.max(0, earlyRetirementAge - currentAge);
+    const yearsInRetirement = Math.max(0, legalRetirementAge - earlyRetirementAge);
     const realReturnRate = (1 + annualReturn / 100) / (1 + inflationRate / 100) - 1;
 
     if (yearsUntilEarlyRetirement < 0 || yearsInRetirement < 0) {
-        throw new Error('Invalid age inputs.');
+        console.error('Invalid age inputs.');
+        return {
+            requiredSavings: 0,
+            monthlySavings: 0,
+            requiredSalary: 0,
+            savingsProgress: 0,
+            remainingSavings: 0,
+            remainingSavingsTodayValue: 0,
+            chartData: []
+        };
     }
 
     // Convert expected savings at legal retirement to future value
@@ -74,6 +83,19 @@ export const calculateRetirement = (
         minMonthlySavings = high;
     }
 
+    // Ensure finalTrajectory is defined
+    if (!finalTrajectory) {
+        return {
+            requiredSavings: 0,
+            monthlySavings: 0,
+            requiredSalary: 0,
+            savingsProgress: 0,
+            remainingSavings: 0,
+            remainingSavingsTodayValue: 0,
+            chartData: []
+        };
+    }
+
     // Generate chart data
     const data = finalTrajectory.map(year => ({
         age: year.age,
@@ -87,11 +109,11 @@ export const calculateRetirement = (
         withdrawal: year.age > earlyRetirementAge ? Math.floor(year.expenses) : 0
     }));
 
-    const legalRetirementData = data[data.length - 1];
-    const remainingSavings = Math.floor(legalRetirementData.savings);
+    const legalRetirementData = data[data.length - 1] || {};
+    const remainingSavings = Math.floor(legalRetirementData.savings || 0);
     const inflationFactor = Math.pow(1 + inflationRate / 100, legalRetirementAge - currentAge);
     const remainingSavingsTodayValue = Math.floor(remainingSavings / inflationFactor);
-    const savingsAtEarlyRetirement = data.find(item => item.age === earlyRetirementAge).savings;
+    const savingsAtEarlyRetirement = data.find(item => item.age === earlyRetirementAge)?.savings || 0;
     const savingsProgress = Math.min(100, Math.floor((currentSavings / savingsAtEarlyRetirement) * 100));
 
     return {

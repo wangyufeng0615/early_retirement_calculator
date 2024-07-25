@@ -30,6 +30,7 @@ const RetirementCalculator = () => {
         calculateRetirementData();
     }, [currentAge, earlyRetirementAge, legalRetirementAge, monthlyExpenses, currentSavings, annualReturn, inflationRate, expectedSavingsAtLegalRetirement]);
 
+
     const calculateRetirementData = () => {
         const results = calculateRetirement(
             currentAge,
@@ -42,13 +43,15 @@ const RetirementCalculator = () => {
             expectedSavingsAtLegalRetirement
         );
 
-        setRequiredSavings(results.requiredSavings);
-        setMonthlySavings(results.monthlySavings);
-        setRequiredSalary(results.requiredSalary);
-        setSavingsProgress(results.savingsProgress);
-        setChartData(results.chartData);
-        setRemainingSavings(results.remainingSavings);
-        setRemainingSavingsTodayValue(results.remainingSavingsTodayValue);
+        if (results) {
+            setRequiredSavings(results.requiredSavings);
+            setMonthlySavings(results.monthlySavings);
+            setRequiredSalary(results.requiredSalary);
+            setSavingsProgress(results.savingsProgress);
+            setChartData(results.chartData);
+            setRemainingSavings(results.remainingSavings);
+            setRemainingSavingsTodayValue(results.remainingSavingsTodayValue);
+        }
     };
 
     const handleSelectPreset = (preset) => {
