@@ -7,14 +7,13 @@ const Formula = () => {
             <p>核心计算逻辑说明：</p>
             <ol>
                 <li>
-                    <strong>提前退休时所需总储蓄：</strong>
-                    <BlockMath>{"\\text{所需总储蓄} = \\text{年度开支} \\times \\text{退休年数} + \\text{法定退休时的期望储蓄}"}</BlockMath>
+                    <strong>提前退休时所需储蓄：</strong>
+                    <div className="formula-container">
+                        <BlockMath>
+                            {"\\text{所需储蓄} = \\text{年度开支} \\times \\text{退休年数} + \\text{法定退休时的期望储蓄}"}
+                        </BlockMath>
+                    </div>
                     <p>这个公式考虑了从提前退休到法定退休的总开支，以及您希望在法定退休时保留的储蓄。</p>
-                </li>
-                <li>
-                    <strong>每月需要储蓄的金额：</strong>
-                    <BlockMath>{"\\text{月储蓄} = \\frac{\\text{所需总储蓄} - \\text{当前储蓄}}{\\text{剩余工作月数}}"}</BlockMath>
-                    <p>这个简化版本的公式计算了您每月需要储蓄的金额，以达到提前退休的目标。</p>
                 </li>
             </ol>
             <p>

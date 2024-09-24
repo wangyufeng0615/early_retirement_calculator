@@ -30,7 +30,7 @@ const Chart = ({ data, earlyRetirementAge }) => {
     };
 
     return (
-        <div className="result-item">
+        <div className="chart-container">
             <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                     <XAxis dataKey="age" label={{ value: '年龄', position: 'insideBottomRight', offset: -10 }} />
