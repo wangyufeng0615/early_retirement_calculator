@@ -10,7 +10,7 @@ import { calculateRetirement } from './retirementCalculations';
 
 const RetirementCalculator = () => {
     const [currentAge, setCurrentAge] = useState(29);
-    const [earlyRetirementAge, setEarlyRetirementAge] = useState(35);
+    const [earlyRetirementAge, setEarlyRetirementAge] = useState(40);
     const [legalRetirementAge, setLegalRetirementAge] = useState(65);
     const [monthlyExpenses, setMonthlyExpenses] = useState(8000);
     const [currentSavings, setCurrentSavings] = useState(800000);
@@ -67,67 +67,68 @@ const RetirementCalculator = () => {
 
     return (
         <div className="container">
+            <h1 className="title">王工的提前退休计算器</h1>
             <div className="card">
-                <div className="card-header">
-                    <div className="card-title">王工的提前退休计算器(PC端)</div>
+                <div className="description">
+                    感觉自己坚持不到法定退休年龄？想主动提前退休？<br /><br />
+                    通过这个计算器，你可以算一算，如果你想<strong style={{ color: 'green' }}>主动提前退休</strong>，你需要有多少收入和储蓄。<br /><br />
+                    祝大家健康长寿！<br /><br />
+                    有需求或疑问欢迎反馈到微信：807103724
                 </div>
-                <div className="card-content">
-                    <div className="description">
-                        感觉自己坚持不到法定退休年龄？通过这个计算器，你可以算一算，如果你想主动提前退休，你需要有多少储蓄。<br /><br />
-                        有需求请反馈到 alanwang424@gmail.com 谢谢！
-                    </div>
-                    <div className="module">
-                        <h2 className="module-title">输入参数</h2>
-                        <InputForm
-                            currentAge={currentAge}
-                            setCurrentAge={setCurrentAge}
-                            earlyRetirementAge={earlyRetirementAge}
-                            setEarlyRetirementAge={setEarlyRetirementAge}
-                            legalRetirementAge={legalRetirementAge}
-                            setLegalRetirementAge={setLegalRetirementAge}
-                            monthlyExpenses={monthlyExpenses}
-                            setMonthlyExpenses={setMonthlyExpenses}
-                            currentSavings={currentSavings}
-                            setCurrentSavings={setCurrentSavings}
-                            annualReturn={annualReturn}
-                            setAnnualReturn={setAnnualReturn}
-                            inflationRate={inflationRate}
-                            setInflationRate={setInflationRate}
-                            expectedSavingsAtLegalRetirement={expectedSavingsAtLegalRetirement}
-                            setExpectedSavingsAtLegalRetirement={setExpectedSavingsAtLegalRetirement}
-                        />
-                    </div>
-                    <div className="module">
-                        <h2 className="module-title">计算结果</h2>
-                        <Results
-                            requiredSavings={requiredSavings}
-                            monthlySavings={monthlySavings}
-                            requiredSalary={requiredSalary}
-                            savingsProgress={savingsProgress}
-                            remainingSavings={remainingSavings}
-                            remainingSavingsTodayValue={remainingSavingsTodayValue}
-                        />
-                    </div>
-                    <div className="module">
-                        <h2 className="module-title">储蓄变化曲线</h2>
-                        <Chart data={chartData} earlyRetirementAge={earlyRetirementAge} />
-                    </div>
-                    <div className="module">
-                        <h2 className="module-title">预设情景</h2>
-                        <Presets onSelectPreset={handleSelectPreset} />
-                    </div>
-                    <div className="module">
-                        <h2 className="module-title">说明</h2>
-                        <Formula />
-                    </div>
-                </div>
-                <footer className="footer">
-                    <p>Coding with ChatGPT 4o, Claude 3.5 Sonnet and Perplexity.ai</p>
-                    <p>
-                        GitHub: <a href="https://github.com/wangyufeng0615/early_retirement_calculator" target="_blank" rel="noopener noreferrer">https://github.com/wangyufeng0615/early_retirement_calculator</a>
-                    </p>
-                </footer>
             </div>
+            <div className="module">
+                <InputForm
+                    currentAge={currentAge}
+                    setCurrentAge={setCurrentAge}
+                    earlyRetirementAge={earlyRetirementAge}
+                    setEarlyRetirementAge={setEarlyRetirementAge}
+                    legalRetirementAge={legalRetirementAge}
+                    setLegalRetirementAge={setLegalRetirementAge}
+                    monthlyExpenses={monthlyExpenses}
+                    setMonthlyExpenses={setMonthlyExpenses}
+                    currentSavings={currentSavings}
+                    setCurrentSavings={setCurrentSavings}
+                    annualReturn={annualReturn}
+                    setAnnualReturn={setAnnualReturn}
+                    inflationRate={inflationRate}
+                    setInflationRate={setInflationRate}
+                    expectedSavingsAtLegalRetirement={expectedSavingsAtLegalRetirement}
+                    setExpectedSavingsAtLegalRetirement={setExpectedSavingsAtLegalRetirement}
+                />
+            </div>
+            <div className="module results-module">
+                <div className="card">
+                    <h2 className="module-title">计算结果</h2>
+                    <Results
+                        requiredSavings={requiredSavings}
+                        monthlySavings={monthlySavings}
+                        requiredSalary={requiredSalary}
+                        savingsProgress={savingsProgress}
+                        remainingSavings={remainingSavings}
+                        remainingSavingsTodayValue={remainingSavingsTodayValue}
+                    />
+                </div>
+            </div>
+            <div className="chart-module">
+                <h2 className="module-title">储蓄变化曲线</h2>
+                <Chart data={chartData} earlyRetirementAge={earlyRetirementAge} />
+            </div>
+            <div className="module">
+                <h2 className="module-title">预设情景</h2>
+                <Presets onSelectPreset={handleSelectPreset} />
+            </div>
+            <div className="module">
+                <h2 className="module-title">说明</h2>
+                <Formula />
+            </div>
+            <footer className="footer">
+                <p>
+                    Write with Cursor.
+                </p>
+                <p>
+                    Code: <a href="https://github.com/wangyufeng0615/early_retirement_calculator" target="_blank" rel="noopener noreferrer">GitHub</a>
+                </p>
+            </footer>
         </div>
     );
 };

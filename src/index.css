@@ -1,359 +1,259 @@
-/* Base styles for all devices */
+/* 全局样式保持不变 */
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2d3e50;
+    --background-color: #f5f7fa;
+    --font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f2f5;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: #333;
 }
 
-.container {
-    width: 100%;
-    max-width: 800px;
-    margin: auto;
-    background-color: white;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid #e0e0e0;
-}
-
-.card {
-    padding: 30px;
-}
-
-.card-header {
+/* 调整标题样式，移除背景色 */
+.title {
+    font-size: 2rem;
     text-align: center;
-    border-bottom: 2px solid #e9ecef;
-    padding-bottom: 20px;
-    margin-bottom: 30px;
+    padding: 10px 10px; /* 缩小上下内边距 */
+    color: var(--secondary-color);
+    /* 移除背景色，使其与页面背景一致 */
 }
 
-.card-title {
-    font-size: 28px;
-    font-weight: bold;
-    color: #2c3e50;
-}
-
-.card-content {
-    padding: 10px 0;
-}
-
-.description {
-    font-size: 16px;
-    color: #5a6a7e;
-    margin-bottom: 30px;
-    line-height: 1.5;
-}
-
-.module {
+/* 卡片样式，用于引导语 */
+.card {
     background-color: #ffffff;
-    border-radius: 8px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e0e0e0;
+    margin-bottom: 20px;
 }
 
-.module-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #2c3e50;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #e9ecef;
-    padding-bottom: 10px;
+/* 调整输入表单样式 */
+.input-form {
+    margin: 0;
+    padding: 0;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-}
-
+/* 调整表单组样式 */
 .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .form-group label {
+    display: block;
     font-weight: bold;
     margin-bottom: 5px;
-    color: #34495e;
+    color: #2c3e50;
 }
 
 .input-group {
     display: flex;
     align-items: center;
+    margin-bottom: 5px; /* 添加下方间距 */
 }
 
-input[type="text"] {
-    width: 80px;
-    padding: 8px;
+.input-group input {
+    flex: 1;
+    height: 36px;
+    font-size: 1rem;
+    text-align: center;
     border: 1px solid #ced4da;
     border-radius: 4px;
-    text-align: center;
-    font-size: 14px;
-}
-
-button {
-    width: 30px;
-    height: 30px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    background-color: #3498db;
-    color: white;
-    cursor: pointer;
     margin: 0 5px;
-    transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #2980b9;
+.input-group button {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
 .note {
-    font-size: 12px;
+    font-size: 0.85rem;
     color: #7f8c8d;
-    margin-top: 5px;
+    margin-left: 0; /* 移除左边距 */
 }
 
-.results {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+/* 调整「计算结果」模块的样式 */
+.results-module .card {
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
-.result-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* 进度条样式 */
+.progress-section {
     text-align: center;
-    background-color: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    transition: transform 0.3s ease;
-    border: 1px solid #e0e0e0;
-}
-
-.result-item:hover {
-    transform: translateY(-5px);
-}
-
-.result-item label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #34495e;
-}
-
-.value {
-    font-size: 24px;
-    font-weight: bold;
-    color: #3498db;
-}
-
-.progress {
-    width: 100%;
-    height: 10px;
-    border-radius: 5px;
-    background-color: #ecf0f1;
-    margin-top: 10px;
-    overflow: hidden;
-}
-
-.progress-bar {
-    height: 100%;
-    background-color: #2ecc71;
-    transition: width 0.3s ease;
+    margin-bottom: 20px;
 }
 
 .progress-text {
-    font-size: 14px;
-    color: #7f8c8d;
-    margin-top: 5px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #27ae60; /* 绿色 */
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #27ae60; /* 绿色 */
+    transition: width 0.5s ease-in-out;
+}
+
+/* 结果表格样式 */
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f9f9f9;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.result-table td {
+    padding: 15px 20px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.result-table tr:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+.result-table td {
+    border: none;
 }
 
 .result-table {
     width: 100%;
     border-collapse: collapse;
-}
-
-.result-table td, .result-table th {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-}
-
-.result-table th {
-    background-color: #f2f2f2;
-    color: #34495e;
-}
-
-.highlight {
-    background-color: #f9f871;
-    font-weight: bold;
-}
-
-.formula {
-    background-color: #f8f9fa;
-    padding: 20px;
+    background-color: #f9f9f9;
+    margin-top: 20px;
     border-radius: 8px;
-    border: 1px solid #e0e0e0;
+    overflow: hidden;
 }
 
-.formula p {
-    font-weight: bold;
-    color: #2c3e50;
+.result-table td {
+    padding: 15px 20px;
+    font-size: 1rem;
+    color: #333;
 }
 
-.formula ul {
-    padding-left: 20px;
+.result-table tr:nth-child(even) {
+    background-color: #f1f1f1;
 }
 
-.formula ul li {
-    font-size: 14px;
-    color: #34495e;
-    margin-bottom: 10px;
-    line-height: 1.5;
+/* 如果需要移除边框线 */
+.result-table td {
+    border: none;
 }
 
+/* 美化预设情景按钮 */
 .presets {
-    margin-top: 30px;
-    text-align: center;
-}
-
-.preset-description {
-    font-size: 16px;
-    color: #34495e;
-    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
 }
 
 .preset-buttons {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
 }
 
 .preset-button {
-    width: 100%;
-    padding: 15px 20px;
-    font-size: 16px;
+    flex: 1 1 45%;
+    padding: 12px;
+    font-size: 1rem;
     background-color: #3498db;
-    color: white;
+    color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
 }
 
 .preset-button:hover {
     background-color: #2980b9;
-    transform: translateY(-2px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Reference line label styling */
-.reference-line-label {
-    font-size: 7px;
-    font-weight: bold;
-    fill: red;
-    background: white;
-    padding: 2px;
-    transform: translate(15px, 15px);
-}
-
-/* Footer styling */
-.footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #f8f9fa;
-    border-top: 1px solid #e0e0e0;
-}
-
-.footer p {
-    margin: 5px 0;
-    font-size: 14px;
-    color: #5a6a7e;
-}
-
-.footer a {
-    color: #3498db;
-    text-decoration: none;
-}
-
-.footer a:hover {
-    text-decoration: underline;
-}
-
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .card {
-      padding: 20px;
-    }
-
-    .card-title {
-      font-size: 24px;
-    }
-
-    .module-title {
-      font-size: 18px;
-    }
-
-    .description {
-      font-size: 14px;
-    }
-
-    .form-group label, .result-item label {
-      font-size: 14px;
-    }
-
-    .value {
-      font-size: 20px;
-    }
-
-    .preset-buttons {
-      flex-direction: column;
-    }
-
+/* 在小屏幕下按钮全宽 */
+@media (max-width: 600px) {
     .preset-button {
-      font-size: 14px;
-      padding: 10px 15px;
-    }
-
-    .preset-description {
-      font-size: 14px;
+        flex: 1 1 100%;
+        margin-bottom: 10px;
     }
 }
 
-.input-error {
-    border-color: red;
-    background-color: #ffe6e6;
+/* 调整容器内边距 */
+.container {
+    padding: 10px;
 }
 
-.notification {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #4CAF50;
-    color: white;
-    padding: 15px 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    z-index: 1000;
-    animation: fadeInOut 3s ease-in-out;
+/* 调整标题字体大小 */
+.title {
+    font-size: 1.75rem;
 }
 
-@keyframes fadeInOut {
-    0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-    10% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    90% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+/* 调整输入框按钮尺寸 */
+.input-group input {
+    width: 100%;
+    max-width: 100px;
+}
+
+.input-group button {
+    width: 36px;
+    height: 36px;
+}
+
+/* 确保输入参数的布局在小屏幕上友好 */
+@media (max-width: 600px) {
+    .form-group {
+        /* 使每个输入项占据完整宽度 */
+    }
+
+    .input-group {
+        justify-content: center;
+    }
+
+    .input-group input {
+        max-width: 80%;
+    }
+}
+
+/* 高亮每月需要储蓄 */
+.result-table td {
+    /* 原有样式 */
+}
+
+.result-table td.highlight {
+    color: orange;
+    font-weight: bold;
+}
+
+/* 新增样式使公式区域可以左右滚动 */
+.formula {
+    overflow-x: auto; /* 启用水平滚动 */
+    white-space: nowrap; /* 防止文本自动换行 */
 }

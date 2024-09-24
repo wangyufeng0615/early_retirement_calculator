@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const presets = [
     {
@@ -48,29 +48,17 @@ const presets = [
 ];
 
 const Presets = ({ onSelectPreset }) => {
-    const [showNotification, setShowNotification] = useState(false);
-
-    const handlePresetClick = (preset) => {
-        onSelectPreset(preset);
-        setShowNotification(true);
-        setTimeout(() => setShowNotification(false), 2000); // 2秒后隐藏通知
-    };
-
     return (
         <div className="presets">
-            {showNotification && (
-                <div className="notification">
-                    预设已应用
-                </div>
-            )}
-            <p className="preset-description">探索一下不同的输入组合所带来的不同结果</p>
-            <div className="preset-buttons">
-                {presets.map((preset, index) => (
-                    <button key={index} onClick={() => handlePresetClick(preset)} className="preset-button">
-                        {preset.name}
-                    </button>
-                ))}
-            </div>
+            {presets.map((preset, index) => (
+                <button
+                    key={index}
+                    className="preset-button"
+                    onClick={() => onSelectPreset(preset)}
+                >
+                    {preset.name}
+                </button>
+            ))}
         </div>
     );
 };

@@ -1,47 +1,42 @@
 import React from 'react';
 
-const Results = ({
-    requiredSavings,
-    monthlySavings,
-    requiredSalary,
-    savingsProgress,
-    remainingSavings,
-    remainingSavingsTodayValue,
-}) => {
+const Results = (props) => {
     const formatCurrency = (value) => {
-        return new Intl.NumberFormat('zh-CN', { style: 'currency', currency: 'CNY', minimumFractionDigits: 0 }).format(value);
+        return new Intl.NumberFormat('zh-CN', {
+            style: 'currency',
+            currency: 'CNY',
+            minimumFractionDigits: 0,
+        }).format(value);
     };
+
+    const { savingsProgress } = props;
 
     return (
         <div className="results">
-            <div className="result-item full-width">
-                <label>提前退休时所需总储蓄（考虑通胀后）</label>
-                <p className="value">{formatCurrency(requiredSavings)}</p>
-                <progress value={savingsProgress} max="100" className="progress" />
+            {/* 进度条 */}
+            <div className="progress-section">
                 <p className="progress-text">已完成 {savingsProgress}%</p>
+                <div className="progress-bar">
+                    <div
+                        className="progress-fill"
+                        style={{ width: `${savingsProgress}%` }}
+                    ></div>
+                </div>
             </div>
+
+            {/* 结果表格 */}
             <table className="result-table">
                 <tbody>
                     <tr>
-                        <th>项目</th>
-                        <th>金额</th>
-                    </tr>
-                    <tr className="highlight">
-                        <td>提前退休前所需月收入（到手）</td>
-                        <td>{formatCurrency(requiredSalary)}</td>
+                        <td>提前退休时所需储蓄</td>
+                        <td>{formatCurrency(props.requiredSavings)}</td>
                     </tr>
                     <tr>
-                        <td>提前退休前每月需储蓄（到手减去开销）</td>
-                        <td>{formatCurrency(monthlySavings)}</td>
+                        <td className="highlight">每月需要储蓄</td>
+                        <td className="highlight">{formatCurrency(props.monthlySavings)}</td>
                     </tr>
-                    <tr>
-                        <td>法定退休年龄时剩余储蓄</td>
-                        <td>{formatCurrency(remainingSavings)}</td>
-                    </tr>
-                    <tr>
-                        <td>法定退休年龄时剩余储蓄（折算为今天的购买力）</td>
-                        <td>{formatCurrency(remainingSavingsTodayValue)}</td>
-                    </tr>
+                    {/* 移除“需要的年收入”行 */}
+                    {/* 其他结果 */}
                 </tbody>
             </table>
         </div>
