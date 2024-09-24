@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from 'recharts';
 
 const Chart = ({ data, earlyRetirementAge }) => {
+    const [showYAxis, setShowYAxis] = useState(false);
+
+    const toggleYAxis = () => {
+        setShowYAxis(!showYAxis);
+    };
+
     const formatCurrency = (value) => {
         return new Intl.NumberFormat('zh-CN', { style: 'currency', currency: 'CNY', minimumFractionDigits: 0 }).format(value);
     };
@@ -31,10 +37,20 @@ const Chart = ({ data, earlyRetirementAge }) => {
 
     return (
         <div className="chart-container">
+            <div className="chart-header">
+                <h2>储蓄变化曲线</h2>
+                <button onClick={toggleYAxis} className="toggle-button">
+                    {showYAxis ? '👁️ 显示储蓄金额刻度' : '🙈 隐藏储蓄金额刻度'}
+                </button>
+            </div>
             <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                     <XAxis dataKey="age" label={{ value: '年龄', position: 'insideBottomRight', offset: -10 }} />
-                    <YAxis tickFormatter={formatYAxis} label={{ value: '储蓄金额', angle: -90, position: 'insideLeft', offset: -5 }} />
+                    <YAxis
+                        tickFormatter={formatYAxis}
+                        label={{ value: '储蓄金额', angle: -90, position: 'insideLeft', offset: -5 }}
+                        tick={showYAxis}
+                    />
                     <Tooltip content={<CustomTooltip />} />
                     <Legend />
                     <Line type="monotone" dataKey="savings" stroke="#4caf50" name="累计储蓄" dot={false} />
