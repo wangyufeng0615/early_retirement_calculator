@@ -257,3 +257,23 @@ body {
     overflow-x: auto; /* 启用水平滚动 */
     white-space: nowrap; /* 防止文本自动换行 */
 }
+
+.chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.toggle-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+}
+
+.toggle-button:hover {
+    color: var(--primary-color);
+}
