@@ -38,7 +38,6 @@ const Chart = ({ data, earlyRetirementAge }) => {
     return (
         <div className="chart-container">
             <div className="chart-header">
-                <h2>储蓄变化曲线</h2>
                 <button onClick={toggleYAxis} className="toggle-button">
                     {showYAxis ? '👁️ 显示储蓄金额刻度' : '🙈 隐藏储蓄金额刻度'}
                 </button>

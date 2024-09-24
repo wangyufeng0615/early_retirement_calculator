@@ -11,9 +11,9 @@ import { calculateRetirement } from './retirementCalculations';
 const RetirementCalculator = () => {
     const [currentAge, setCurrentAge] = useState(29);
     const [earlyRetirementAge, setEarlyRetirementAge] = useState(40);
-    const [legalRetirementAge, setLegalRetirementAge] = useState(65);
+    const [legalRetirementAge, setLegalRetirementAge] = useState(63);
     const [monthlyExpenses, setMonthlyExpenses] = useState(8000);
-    const [currentSavings, setCurrentSavings] = useState(800000);
+    const [currentSavings, setCurrentSavings] = useState(200000);
     const [annualReturn, setAnnualReturn] = useState(3.5);
     const [inflationRate, setInflationRate] = useState(2);
     const [expectedSavingsAtLegalRetirement, setExpectedSavingsAtLegalRetirement] = useState(0);
@@ -127,6 +127,9 @@ const RetirementCalculator = () => {
                 </p>
                 <p>
                     Code: <a href="https://github.com/wangyufeng0615/early_retirement_calculator" target="_blank" rel="noopener noreferrer">GitHub</a>
+                </p>
+                <p>
+                    Blog: <a href="https://wangyufeng.org" target="_blank" rel="noopener noreferrer">wangyufeng.org</a>
                 </p>
             </footer>
         </div>
