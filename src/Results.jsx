@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Results = (props) => {
+    const { t } = useTranslation();
+    
     const formatCurrency = (value) => {
         return new Intl.NumberFormat('zh-CN', {
             style: 'currency',
@@ -15,7 +18,9 @@ const Results = (props) => {
         <div className="results">
             {/* 进度条 */}
             <div className="progress-section">
-                <p className="progress-text">已完成 {savingsProgress}%</p>
+                <p className="progress-text">
+                    {t('results.progressText', { progress: savingsProgress })}
+                </p>
                 <div className="progress-bar">
                     <div
                         className="progress-fill"
@@ -28,14 +33,14 @@ const Results = (props) => {
             <table className="result-table">
                 <tbody>
                     <tr>
-                        <td>提前退休时所需储蓄</td>
+                        <td>{t('results.requiredSavings')}</td>
                         <td>{formatCurrency(props.requiredSavings)}</td>
                     </tr>
                     <tr>
-                        <td className="highlight">每月需要储蓄</td>
+                        <td className="highlight">{t('results.monthlySavings')}</td>
                         <td className="highlight">{formatCurrency(props.monthlySavings)}</td>
                     </tr>
-                    {/* 移除“需要的年收入”行 */}
+                    {/* 移除"需要的年收入"行 */}
                     {/* 其他结果 */}
                 </tbody>
             </table>

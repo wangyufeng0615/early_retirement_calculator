@@ -1,0 +1,105 @@
+{
+  "header": {
+    "title": "王工的提前退休计算器",
+    "github": "📚 GitHub(喜欢的话请帮忙star)",
+    "blog": "📝 Blog",
+    "chinese": "中文",
+    "english": "English"
+  },
+  "description": {
+    "line1": "> 想在法定退休年龄前提前退休？想要FIRE？",
+    "line2": "> 通过这个计算器，你可以算一算，如果你想<fire>主动提前退休</fire>，你需要有多少收入和储蓄。",
+    "line3": "> 所以说，这也是一个<fireCalculator>FIRE计算器</fireCalculator>，某种意义上，也是财富自由计算器。",
+    "line4": "> 放心使用，不会保存数据",
+    "line5": "> 有需求或疑问欢迎加微信：807103724",
+    "fire": "主动提前退休",
+    "fireCalculator": "FIRE计算器",
+    "noDataSave": "放心使用，不会保存数据"
+  },
+  "inputForm": {
+    "ageSettings": "年龄设置",
+    "currentAge": "你的当前年龄",
+    "earlyRetirementAge": "提前退休年龄",
+    "earlyRetirementDesc": "你计划几岁开始FIRE？",
+    "earlyRetirementTooltip": "你打算从多少岁开始主动提前退休(FIRE)。比如40岁，假设从这年之后，你就没有收入了。程序员可以试试填写35岁。",
+    "legalRetirementAge": "法定退休年龄",
+    "legalRetirementDesc": "开始领取养老金的年龄，一般不用改",
+    "legalRetirementTooltip": "你开始领取养老金的年龄。简单起见，本计算器假设你法定退休后收入是够用的（即替代率为100%）。",
+    "financialStatus": "财务状况",
+    "monthlyExpenses": "每月生活开销 (元)",
+    "monthlyExpensesDesc": "包括工作和退休后的开销(平均)",
+    "monthlyExpensesTooltip": "包括你上班和提前退休后每个月的平均开销。虽然时间跨度很大，但可以根据你的消费习惯，尽可能估算一下。",
+    "currentSavings": "当前储蓄总计 (元)",
+    "currentSavingsDesc": "现有储蓄和投资总额",
+    "currentSavingsTooltip": "你已经存了多少钱，包括存款和中低风险投资。负债不建议算进来。",
+    "monthlyPension": "预计月退休金 (元)",
+    "monthlyPensionDesc": "法定退休后的月退休金收入",
+    "monthlyPensionTooltip": "法定退休后你预期每月能领到的退休金。这笔收入可以补充你的日常开销。参考：全国平均约3000元，一线城市可达4000-5000元。",
+    "expectedSavingsAtLegalRetirement": "法定退休时的期望储蓄 (元)",
+    "expectedSavingsDesc": "退休时希望保留的储蓄",
+    "expectedSavingsTooltip": "到了法定退休年龄时，你希望手里还剩下多少储蓄（按当下购买力）。一般来说，退休金不一定能满足你的日常开销，所以最好手里存一些钱。如果你认为退休金可以完全满足开销（替代率100%），这里可以填0。",
+    "investmentParams": "投资参数",
+    "annualReturn": "年投资回报率 (%)",
+    "annualReturnDesc": "预期年均投资回报率",
+    "annualReturnTooltip": "你认为的储蓄和投资平均年回报率。参考数据：余额宝 1.43%；沪深300近十年平均 5%；标普500近十年平均 15.6%。",
+    "inflationRate": "年通货膨胀率 (%)",
+    "inflationRateDesc": "长期平均通胀率",
+    "inflationRateTooltip": "考虑到通胀，你存的钱会变得更不值钱。你可以填写认为的长期年平均通胀率，默认值2%。"
+  },
+  "results": {
+    "title": "计算结果",
+    "progressText": "恭喜你！退休计划已完成 {{progress}}%",
+    "requiredSavings": "提前退休时所需储蓄",
+    "monthlySavings": "每月需要储蓄"
+  },
+  "chart": {
+    "title": "储蓄变化曲线"
+  },
+  "presets": {
+    "title": "预设情景",
+    "applied": "已应用预设：{{name}}",
+    "profiles": {
+      "programmer": "高收入|高支出|追求高投资回报|高失业风险程序员",
+      "middleIncome": "中等收入|中等开销|失业低风险|低风险投资|工作耐受度高",
+      "extremeLayFlat": "极限躺平年轻人",
+      "stockGod": "股神"
+    }
+  },
+  "formula": {
+    "title": "说明",
+    "coreAlgorithm": "核心算法思路",
+    "coreDesc": "本计算器使用逐年模拟 + 二分搜索的方法，精确计算满足退休目标的最小月度储蓄。",
+    "realReturnRate": "1. 实际投资回报率",
+    "realReturnDesc": "考虑通胀影响的实际回报率：",
+    "realReturnNote": "其中 r_nominal 为年投资回报率，r_inflation 为通胀率，r 为年投资回报率。",
+    "savingsTrajectory": "2. 储蓄轨迹建模",
+    "savingsTrajectoryDesc": "计算器将人生分为三个阶段，逐年模拟储蓄变化：",
+    "workingPeriod": "① 工作期（当前年龄 → 提前退休年龄）：",
+    "earlyRetirementPeriod": "② 提前退休期（提前退休年龄 → 法定退休年龄）：",
+    "legalRetirementPeriod": "③ 法定退休期（法定退休年龄之后）：",
+    "where": "其中：",
+    "variables": [
+      "S_t = 第t年的储蓄总额",
+      "M_save = 月度储蓄金额（算法求解的目标值）",
+      "E_t = 第t年的年度开支（随通胀增长）",
+      "P_t = 第t年的年度退休金（随通胀增长）",
+      "r = 年投资回报率"
+    ],
+    "inflationAdjustment": "3. 开支和退休金的通胀调整",
+    "inflationNote": "其中 E_0 为当前年度开支，P_0 为当前年度退休金，t 为经过的年数。",
+    "constraints": "4. 约束条件",
+    "constraintsDesc": "算法通过二分搜索找到满足以下条件的最小月度储蓄：",
+    "constraintsList": [
+      "每年储蓄 ≥ 0（不能负债）",
+      "法定退休时储蓄 ≥ 期望储蓄目标"
+    ],
+    "assumptions": "5. 关键假设",
+    "assumptionsList": [
+      "投资回报率和通胀率保持稳定",
+      "退休金从法定退休年龄开始发放",
+      "生活开支随通胀等比例增长",
+      "不考虑税收等其他因素"
+    ],
+    "note": "注：实际计算使用数值方法求解，确保结果的准确性和稳定性。"
+  }
+} 

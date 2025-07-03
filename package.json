@@ -3,30 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
+    "i18next": "^25.3.0",
     "katex": "^0.16.11",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-i18next": "^15.5.3",
     "react-katex": "^3.0.1",
-    "react-latex-next": "^3.0.0",
-    "react-scripts": "5.0.1",
-    "recharts": "^2.12.7",
+    "recharts": "^3.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "predeploy": "npm run build && cp CNAME build/",
     "deploy": "gh-pages -d build -t true",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {
@@ -42,7 +37,9 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.1.1"
+    "@vitejs/plugin-react": "^4.2.1",
+    "gh-pages": "^6.1.1",
+    "vite": "^5.0.0"
   },
   "homepage": "https://retirement.wangyufeng.org"
 }

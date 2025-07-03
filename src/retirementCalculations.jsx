@@ -6,7 +6,8 @@ export const calculateRetirement = (
     currentSavings,
     annualReturn,
     inflationRate,
-    expectedSavingsAtLegalRetirement
+    expectedSavingsAtLegalRetirement,
+    monthlyPension
 ) => {
     const yearsUntilEarlyRetirement = Math.max(0, earlyRetirementAge - currentAge);
     const yearsInRetirement = Math.max(0, legalRetirementAge - earlyRetirementAge);
@@ -32,16 +33,35 @@ export const calculateRetirement = (
     const calculateSavingsTrajectory = (monthlySavings) => {
         let savings = currentSavings;
         let yearlyExpenses = monthlyExpenses * 12;
+        let yearlyPension = monthlyPension * 12;
         const trajectory = [];
 
         for (let age = currentAge; age <= legalRetirementAge; age++) {
-            if (age <= earlyRetirementAge) {
-                savings = savings * (1 + annualReturn / 100) + monthlySavings * 12;
-            } else {
-                savings = (savings * (1 + annualReturn / 100)) - yearlyExpenses;
+            // 记录轨迹，区分提前退休期和法定退休后（先记录当前状态）
+            const currentPension = age > legalRetirementAge ? yearlyPension : 0;
+            const currentNetExpenses = age > legalRetirementAge ? Math.max(0, yearlyExpenses - yearlyPension) : yearlyExpenses;
+            
+            trajectory.push({ 
+                age, 
+                savings, 
+                expenses: yearlyExpenses,
+                pension: currentPension,
+                netExpenses: currentNetExpenses
+            });
+            
+            // 然后计算下一年的储蓄（除了最后一年）
+            if (age < legalRetirementAge) {
+                if (age < earlyRetirementAge) {
+                    // 工作期：储蓄增长
+                    savings = savings * (1 + annualReturn / 100) + monthlySavings * 12;
+                } else {
+                    // 提前退休期：消费全部生活费
+                    savings = (savings * (1 + annualReturn / 100)) - yearlyExpenses;
+                }
             }
-            trajectory.push({ age, savings, expenses: yearlyExpenses });
+            
             yearlyExpenses *= (1 + inflationRate / 100);
+            yearlyPension *= (1 + inflationRate / 100);
         }
 
         return trajectory;
@@ -54,7 +74,7 @@ export const calculateRetirement = (
                 // For the last year, compare with futureExpectedSavings
                 return year.savings >= futureExpectedSavings;
             }
-            return year.savings >= year.expenses;
+            return year.savings >= year.netExpenses;
         });
     };
 
@@ -101,12 +121,14 @@ export const calculateRetirement = (
         age: year.age,
         savings: Math.floor(year.savings),
         expenses: Math.floor(year.expenses),
+        pension: Math.floor(year.pension || 0),
+        netExpenses: Math.floor(year.netExpenses),
         assetReturn: Math.floor(year.savings * (annualReturn / 100)),
         inflationImpact: Math.floor(year.expenses * (inflationRate / 100)),
         savingsChange: year.age <= earlyRetirementAge ?
             Math.floor(minMonthlySavings * 12) :
-            Math.floor(-year.expenses),
-        withdrawal: year.age > earlyRetirementAge ? Math.floor(year.expenses) : 0
+            Math.floor(-year.netExpenses),
+        withdrawal: year.age > earlyRetirementAge ? Math.floor(year.netExpenses) : 0
     }));
 
     const legalRetirementData = data[data.length - 1] || {};
