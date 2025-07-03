@@ -1,17 +1,66 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Tooltip组件
 const Tooltip = ({ content, children }) => {
     const [isVisible, setIsVisible] = useState(false);
+    const tooltipRef = useRef(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    // 检测是否为移动设备
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    // 监听点击外部区域
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (tooltipRef.current && !tooltipRef.current.contains(event.target)) {
+                setIsVisible(false);
+            }
+        };
+
+        if (isVisible) {
+            document.addEventListener('mousedown', handleClickOutside);
+            document.addEventListener('touchstart', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('touchstart', handleClickOutside);
+        };
+    }, [isVisible]);
+
+    const handleTriggerClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsVisible(!isVisible);
+    };
+
+    const handleMouseEnter = () => {
+        if (!isMobile) {
+            setIsVisible(true);
+        }
+    };
+
+    const handleMouseLeave = () => {
+        if (!isMobile) {
+            setIsVisible(false);
+        }
+    };
 
     return (
-        <div className="tooltip-container">
+        <div className="tooltip-container" ref={tooltipRef}>
             <div 
                 className="tooltip-trigger"
-                onMouseEnter={() => setIsVisible(true)}
-                onMouseLeave={() => setIsVisible(false)}
-                onClick={() => setIsVisible(!isVisible)}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                onClick={handleTriggerClick}
             >
                 {children}
             </div>
