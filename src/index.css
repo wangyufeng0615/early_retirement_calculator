@@ -12,6 +12,12 @@
     --card-shadow: rgba(52, 152, 219, 0.08);
 }
 
+/* 防止横向滚动的全局设置 */
+html {
+    overflow-x: hidden;
+    width: 100%;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -26,6 +32,19 @@ body {
         radial-gradient(circle at 80% 80%, rgba(52, 152, 219, 0.03) 0%, transparent 20%);
     color: #333;
     line-height: 1.6;
+    overflow-x: hidden;
+    width: 100%;
+    min-width: 320px;
+}
+
+/* 防止内容区域超出屏幕宽度 */
+.calculator-container,
+.module,
+.card,
+.form-section,
+.input-form {
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 /* App整体布局 */
@@ -33,6 +52,8 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 /* Header样式 */
@@ -183,6 +204,7 @@ body {
     margin: 0 auto;
     padding: 30px 20px;
     width: 100%;
+    overflow-x: hidden;
 }
 
 .calculator-container {
@@ -512,6 +534,7 @@ body {
 /* 结果表格样式 */
 .result-table {
     width: 100%;
+    max-width: 100%;
     border-collapse: collapse;
     background-color: rgba(249, 249, 249, 0.7);
     margin-top: 15px;
@@ -520,6 +543,7 @@ body {
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(52, 152, 219, 0.1);
+    table-layout: fixed;
 }
 
 .result-table td {
@@ -729,6 +753,9 @@ body {
     .form-group {
         min-height: 60px; /* 移动端进一步减少高度 */
         padding: 4px 0;
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
     }
 
     .form-group label {
@@ -764,18 +791,22 @@ body {
 
     .input-group {
         justify-content: flex-start;
+        max-width: 100%;
+        overflow: hidden;
     }
 
     .input-group input {
         max-width: 70%;
         height: 30px;
         font-size: 0.85rem;
+        min-width: 0; /* 允许输入框收缩 */
     }
     
     .input-group button {
         width: 28px;
         height: 28px;
         font-size: 0.8rem;
+        flex-shrink: 0; /* 按钮不收缩 */
     }
     
     .card {
@@ -792,20 +823,44 @@ body {
         font-size: 0.9rem;
     }
 
+    /* 移动端表格优化 */
+    .result-table {
+        width: 100%;
+        max-width: 100%;
+        font-size: 0.8rem;
+    }
+
+    .result-table td {
+        padding: 8px 5px;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
     /* 移动端图表样式优化 */
     .chart-container {
         /* 移除移动端的padding，由外层card提供 */
+        margin: 0 -5px; /* 利用卡片的内边距，让图表延伸到边缘 */
+        width: calc(100% + 10px);
+        max-width: calc(100% + 10px);
+    }
+
+    /* 移动端图表响应式容器优化 */
+    .chart-container .recharts-responsive-container {
+        width: 100% !important;
+        max-width: 100% !important;
     }
 
     .chart-header {
         flex-direction: column;
         align-items: stretch;
         gap: 12px;
+        margin: 0 5px; /* 恢复内容区域的边距 */
     }
 
     .chart-controls {
         justify-content: center;
         gap: 8px;
+        flex-wrap: wrap;
     }
 
     .toggle-button {
@@ -814,11 +869,13 @@ body {
         flex: 1;
         max-width: 120px;
         justify-content: center;
+        min-width: 100px;
     }
 
     .chart-legend {
         justify-content: center;
         gap: 10px;
+        flex-wrap: wrap;
     }
 
     .legend-item, .phase-item {
@@ -829,11 +886,13 @@ body {
         flex-direction: column-reverse;
         align-items: center;
         gap: 8px;
+        margin: 0 5px; /* 恢复内容区域的边距 */
     }
 
     .chart-phases {
         gap: 15px;
         justify-content: center;
+        flex-wrap: wrap;
     }
 
     .chart-hint {
@@ -845,6 +904,9 @@ body {
     .custom-tooltip {
         max-width: 280px !important;
         font-size: 13px !important;
+        left: 10px !important;
+        right: 10px !important;
+        transform: none !important;
     }
 }
 
@@ -873,21 +935,26 @@ body {
 .chart-container {
     /* 移除背景样式，现在由外层card提供 */
     width: 100%;
+    max-width: 100%;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
-/* 确保 recharts 组件充分利用宽度 */
+/* 确保 recharts 组件充分利用宽度且不超出容器 */
 .chart-container .recharts-surface {
     width: 100% !important;
+    max-width: 100% !important;
 }
 
 .chart-container .recharts-wrapper {
     width: 100% !important;
+    max-width: 100% !important;
 }
 
 .chart-container .recharts-responsive-container {
     width: 100% !important;
+    max-width: 100% !important;
 }
 
 .chart-header {
@@ -1014,6 +1081,7 @@ body {
     .main-content {
         padding: 20px 15px;
         max-width: 100%;
+        overflow-x: hidden;
     }
     
     .language-switcher {
