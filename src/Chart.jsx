@@ -1,8 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, ReferenceLine, ReferenceArea } from 'recharts';
 
 const Chart = ({ data, earlyRetirementAge, currentAge }) => {
     const [showYAxis, setShowYAxis] = useState(true);
+    const [chartHeight, setChartHeight] = useState(350);
+
+    useEffect(() => {
+        const updateChartHeight = () => {
+            if (window.innerWidth <= 600) {
+                setChartHeight(300); // 移动端使用较小的高度
+            } else if (window.innerWidth <= 768) {
+                setChartHeight(320); // 平板端使用中等高度
+            } else {
+                setChartHeight(350); // 桌面端使用原始高度
+            }
+        };
+
+        updateChartHeight();
+        window.addEventListener('resize', updateChartHeight);
+        return () => window.removeEventListener('resize', updateChartHeight);
+    }, []);
 
     const toggleYAxis = () => {
         setShowYAxis(!showYAxis);
@@ -89,10 +106,10 @@ const Chart = ({ data, earlyRetirementAge, currentAge }) => {
                 </div>
             </div>
             
-            <ResponsiveContainer width="100%" height={350}>
+            <ResponsiveContainer width="100%" height={chartHeight}>
                 <LineChart 
                     data={data} 
-                    margin={{ top: 20, right: 5, left: 5, bottom: 45 }}
+                    margin={{ top: 20, right: 0, left: 0, bottom: 45 }}
                 >
                     <XAxis 
                         dataKey="age" 
@@ -107,7 +124,7 @@ const Chart = ({ data, earlyRetirementAge, currentAge }) => {
                         tick={showYAxis ? { fontSize: 11 } : false}
                         tickLine={{ stroke: '#bdc3c7' }}
                         axisLine={{ stroke: '#bdc3c7' }}
-                        width={showYAxis ? 60 : 20}
+                        width={showYAxis ? (window.innerWidth <= 600 ? 45 : 60) : 15}
                     />
                     <Tooltip content={<CustomTooltip />} />
                     
