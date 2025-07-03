@@ -24,6 +24,11 @@ i18n
       escapeValue: false // React 已经默认转义了
     },
 
+    // React suspense 支持
+    react: {
+      useSuspense: true
+    },
+
     // 调试模式
     debug: false
   });
