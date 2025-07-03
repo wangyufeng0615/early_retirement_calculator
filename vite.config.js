@@ -5,6 +5,17 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'build', // 保持与CRA相同的输出目录
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          recharts: ['recharts'],
+          katex: ['katex', 'react-katex'],
+          i18n: ['i18next', 'react-i18next']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000
   },
   server: {
     open: true, // 启动时自动打开浏览器
