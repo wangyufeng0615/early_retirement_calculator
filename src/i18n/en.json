@@ -1,0 +1,105 @@
+{
+  "header": {
+    "title": "Wang's Early Retirement Calculator",
+    "github": "📚 GitHub (Please star if you like it)",
+    "blog": "📝 Blog",
+    "chinese": "中文",
+    "english": "English"
+  },
+  "description": {
+    "line1": "> Want to retire early before the legal retirement age? Want to FIRE?",
+    "line2": "> With this calculator, you can figure out how much income and savings you need if you want to <fire>retire early voluntarily</fire>.",
+    "line3": "> So this is also a <fireCalculator>FIRE calculator</fireCalculator>, and in a sense, a financial independence calculator.",
+    "line4": "> Use with confidence, no data will be saved",
+    "line5": "> For questions or feedback, welcome to add WeChat: 807103724",
+    "fire": "voluntary early retirement",
+    "fireCalculator": "FIRE calculator",
+    "noDataSave": "Use with confidence, no data will be saved"
+  },
+  "inputForm": {
+    "ageSettings": "Age Settings",
+    "currentAge": "Your Current Age",
+    "earlyRetirementAge": "Early Retirement Age",
+    "earlyRetirementDesc": "What age do you plan to start FIRE?",
+    "earlyRetirementTooltip": "The age at which you plan to voluntarily retire early (FIRE). For example, 40 years old, assuming you have no income after this year. Programmers can try filling in 35.",
+    "legalRetirementAge": "Legal Retirement Age",
+    "legalRetirementDesc": "Age when you start receiving pension, usually no need to change",
+    "legalRetirementTooltip": "The age at which you start receiving pension. For simplicity, this calculator assumes your income after legal retirement is sufficient (i.e., 100% replacement rate).",
+    "financialStatus": "Financial Status",
+    "monthlyExpenses": "Monthly Living Expenses (CNY)",
+    "monthlyExpensesDesc": "Including expenses during work and retirement (average)",
+    "monthlyExpensesTooltip": "Including your average monthly expenses while working and after early retirement. Although the time span is long, try to estimate based on your spending habits.",
+    "currentSavings": "Current Total Savings (CNY)",
+    "currentSavingsDesc": "Current savings and investment total",
+    "currentSavingsTooltip": "How much money you have saved, including deposits and low to medium-risk investments. Debt is not recommended to be included.",
+    "monthlyPension": "Expected Monthly Pension (CNY)",
+    "monthlyPensionDesc": "Monthly pension income after legal retirement",
+    "monthlyPensionTooltip": "The pension you expect to receive monthly after legal retirement. This income can supplement your daily expenses. Reference: National average about 3,000 CNY, first-tier cities can reach 4,000-5,000 CNY.",
+    "expectedSavingsAtLegalRetirement": "Expected Savings at Legal Retirement (CNY)",
+    "expectedSavingsDesc": "Savings you want to retain at retirement",
+    "expectedSavingsTooltip": "How much savings you want to have left when you reach legal retirement age (in current purchasing power). Generally speaking, pension may not fully meet your daily expenses, so it's better to have some savings. If you think pension can fully meet expenses (100% replacement rate), you can fill in 0.",
+    "investmentParams": "Investment Parameters",
+    "annualReturn": "Annual Investment Return (%)",
+    "annualReturnDesc": "Expected annual average investment return",
+    "annualReturnTooltip": "The average annual return rate you think your savings and investments will achieve. Reference data: Yu'e Bao 1.43%; CSI 300 average 5% in recent ten years; S&P 500 average 15.6% in recent ten years.",
+    "inflationRate": "Annual Inflation Rate (%)",
+    "inflationRateDesc": "Long-term average inflation rate",
+    "inflationRateTooltip": "Considering inflation, your saved money will become less valuable. You can fill in what you think is the long-term annual average inflation rate, default value 2%."
+  },
+  "results": {
+    "title": "Calculation Results",
+    "progressText": "Congratulations! Your retirement plan is {{progress}}% complete",
+    "requiredSavings": "Required Savings at Early Retirement",
+    "monthlySavings": "Monthly Savings Needed"
+  },
+  "chart": {
+    "title": "Savings Change Curve"
+  },
+  "presets": {
+    "title": "Preset Scenarios",
+    "applied": "Applied preset: {{name}}",
+    "profiles": {
+      "programmer": "High Income | High Expenses | High Investment Returns | High Unemployment Risk Programmer",
+      "middleIncome": "Middle Income | Medium Expenses | Low Unemployment Risk | Low Risk Investment | High Work Tolerance",
+      "extremeLayFlat": "Extreme Lay-flat Young People",
+      "stockGod": "Stock God"
+    }
+  },
+  "formula": {
+    "title": "Explanation",
+    "coreAlgorithm": "Core Algorithm Approach",
+    "coreDesc": "This calculator uses year-by-year simulation + binary search method to precisely calculate the minimum monthly savings that meet retirement goals.",
+    "realReturnRate": "1. Real Investment Return Rate",
+    "realReturnDesc": "Real return rate considering inflation impact:",
+    "realReturnNote": "Where r_nominal is the annual investment return rate, r_inflation is the inflation rate, and r is the annual investment return rate.",
+    "savingsTrajectory": "2. Savings Trajectory Modeling",
+    "savingsTrajectoryDesc": "The calculator divides life into three stages and simulates savings changes year by year:",
+    "workingPeriod": "① Working Period (Current Age → Early Retirement Age):",
+    "earlyRetirementPeriod": "② Early Retirement Period (Early Retirement Age → Legal Retirement Age):",
+    "legalRetirementPeriod": "③ Legal Retirement Period (After Legal Retirement Age):",
+    "where": "Where:",
+    "variables": [
+      "S_t = Total savings in year t",
+      "M_save = Monthly savings amount (target value solved by algorithm)",
+      "E_t = Annual expenses in year t (growing with inflation)",
+      "P_t = Annual pension in year t (growing with inflation)",
+      "r = Annual investment return rate"
+    ],
+    "inflationAdjustment": "3. Inflation Adjustment for Expenses and Pension",
+    "inflationNote": "Where E_0 is the current annual expense, P_0 is the current annual pension, and t is the number of years passed.",
+    "constraints": "4. Constraints",
+    "constraintsDesc": "The algorithm uses binary search to find the minimum monthly savings that satisfies the following conditions:",
+    "constraintsList": [
+      "Annual savings ≥ 0 (no debt allowed)",
+      "Savings at legal retirement ≥ expected savings target"
+    ],
+    "assumptions": "5. Key Assumptions",
+    "assumptionsList": [
+      "Investment return rate and inflation rate remain stable",
+      "Pension starts from legal retirement age",
+      "Living expenses grow proportionally with inflation",
+      "Taxes and other factors are not considered"
+    ],
+    "note": "Note: Actual calculations use numerical methods to ensure accuracy and stability of results."
+  }
+} 

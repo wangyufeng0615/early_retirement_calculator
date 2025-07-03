@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import 'katex/dist/katex.min.css';
+import { useTranslation, Trans } from 'react-i18next';
 
-import InputForm from './InputForm';
-import Results from './Results';
-import Chart from './Chart';
-import Formula from './Formula';
-import Presets from './Presets';
-import { calculateRetirement } from './retirementCalculations';
+import InputForm from './InputForm.jsx';
+import Results from './Results.jsx';
+import Chart from './Chart.jsx';
+import Formula from './Formula.jsx';
+import Presets from './Presets.jsx';
+import { calculateRetirement } from './retirementCalculations.jsx';
 
 const RetirementCalculator = () => {
-    const [currentAge, setCurrentAge] = useState(29);
+    const { t } = useTranslation();
+    
+    const [currentAge, setCurrentAge] = useState(30);
     const [earlyRetirementAge, setEarlyRetirementAge] = useState(40);
     const [legalRetirementAge, setLegalRetirementAge] = useState(63);
     const [monthlyExpenses, setMonthlyExpenses] = useState(8000);
@@ -17,6 +20,7 @@ const RetirementCalculator = () => {
     const [annualReturn, setAnnualReturn] = useState(3.5);
     const [inflationRate, setInflationRate] = useState(2);
     const [expectedSavingsAtLegalRetirement, setExpectedSavingsAtLegalRetirement] = useState(0);
+    const [monthlyPension, setMonthlyPension] = useState(3000);
 
     const [requiredSavings, setRequiredSavings] = useState(0);
     const [monthlySavings, setMonthlySavings] = useState(0);
@@ -28,7 +32,7 @@ const RetirementCalculator = () => {
 
     useEffect(() => {
         calculateRetirementData();
-    }, [currentAge, earlyRetirementAge, legalRetirementAge, monthlyExpenses, currentSavings, annualReturn, inflationRate, expectedSavingsAtLegalRetirement]);
+    }, [currentAge, earlyRetirementAge, legalRetirementAge, monthlyExpenses, currentSavings, annualReturn, inflationRate, expectedSavingsAtLegalRetirement, monthlyPension]);
 
 
     const calculateRetirementData = () => {
@@ -40,7 +44,8 @@ const RetirementCalculator = () => {
             currentSavings,
             annualReturn,
             inflationRate,
-            expectedSavingsAtLegalRetirement
+            expectedSavingsAtLegalRetirement,
+            monthlyPension
         );
 
         if (results) {
@@ -63,17 +68,28 @@ const RetirementCalculator = () => {
         setAnnualReturn(preset.annualReturn);
         setInflationRate(preset.inflationRate);
         setExpectedSavingsAtLegalRetirement(preset.expectedSavingsAtLegalRetirement);
+        setMonthlyPension(preset.monthlyPension || 3000);
     };
 
     return (
-        <div className="container">
-            <h1 className="title">王工的提前退休计算器</h1>
+        <div className="calculator-container">
             <div className="card">
                 <div className="description">
-                    感觉自己坚持不到法定退休年龄？想主动提前退休？<br /><br />
-                    通过这个计算器，你可以算一算，如果你想<strong style={{ color: 'green' }}>主动提前退休</strong>，你需要有多少收入和储蓄。<br /><br />
-                    祝大家健康长寿！<br /><br />
-                    有需求或疑问欢迎反馈到微信：807103724
+                    {t('description.line1')}<br />
+                    <Trans 
+                        i18nKey="description.line2" 
+                        components={{ 
+                            fire: <strong style={{ color: '#3498db' }} />
+                        }}
+                    /><br />
+                    <Trans 
+                        i18nKey="description.line3" 
+                        components={{ 
+                            fireCalculator: <strong style={{ color: '#3498db' }} />
+                        }}
+                    /><br />
+                    <strong style={{ color: '#27ae60' }}>{t('description.line4')}</strong><br />
+                    {t('description.line5')}
                 </div>
             </div>
             <div className="module">
@@ -94,11 +110,13 @@ const RetirementCalculator = () => {
                     setInflationRate={setInflationRate}
                     expectedSavingsAtLegalRetirement={expectedSavingsAtLegalRetirement}
                     setExpectedSavingsAtLegalRetirement={setExpectedSavingsAtLegalRetirement}
+                    monthlyPension={monthlyPension}
+                    setMonthlyPension={setMonthlyPension}
                 />
             </div>
             <div className="module results-module">
                 <div className="card">
-                    <h2 className="module-title">计算结果</h2>
+                    <h2 className="module-title">{t('results.title')}</h2>
                     <Results
                         requiredSavings={requiredSavings}
                         monthlySavings={monthlySavings}
@@ -109,29 +127,20 @@ const RetirementCalculator = () => {
                     />
                 </div>
             </div>
-            <div className="chart-module">
-                <h2 className="module-title">储蓄变化曲线</h2>
-                <Chart data={chartData} earlyRetirementAge={earlyRetirementAge} />
+            <div className="module chart-module">
+                <div className="card">
+                <h2 className="module-title">{t('chart.title')}</h2>
+                <Chart data={chartData} earlyRetirementAge={earlyRetirementAge} currentAge={currentAge} />
+                </div>
             </div>
             <div className="module">
-                <h2 className="module-title">预设情景</h2>
+                <h2 className="module-title">{t('presets.title')}</h2>
                 <Presets onSelectPreset={handleSelectPreset} />
             </div>
             <div className="module">
-                <h2 className="module-title">说明</h2>
+                <h2 className="module-title">{t('formula.title')}</h2>
                 <Formula />
             </div>
-            <footer className="footer">
-                <p>
-                    Write with Cursor.
-                </p>
-                <p>
-                    Code: <a href="https://github.com/wangyufeng0615/early_retirement_calculator" target="_blank" rel="noopener noreferrer">GitHub</a>
-                </p>
-                <p>
-                    Blog: <a href="https://wangyufeng.org" target="_blank" rel="noopener noreferrer">wangyufeng.org</a>
-                </p>
-            </footer>
         </div>
     );
 };
