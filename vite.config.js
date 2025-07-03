@@ -19,6 +19,20 @@ export default defineConfig({
   },
   server: {
     open: true, // 启动时自动打开浏览器
+    headers: {
+      // 在开发环境中设置CSP头部
+      'Content-Security-Policy': `
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' 'unsafe-eval';
+        style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+        img-src 'self' data: https:;
+        font-src 'self' data: https://cdn.jsdelivr.net;
+        connect-src 'self' ws: wss:;
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';
+      `.replace(/\s+/g, ' ').trim()
+    }
   },
   define: {
     // 处理环境变量，保持与CRA兼容

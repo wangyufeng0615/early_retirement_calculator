@@ -908,6 +908,28 @@ body {
         right: 10px !important;
         transform: none !important;
     }
+
+    /* 移动端图表文字大小优化 */
+    .recharts-cartesian-axis-tick text {
+        font-size: 9px !important;
+        fill: #666 !important;
+    }
+    
+    .recharts-label text {
+        font-size: 9px !important;
+        fill: #666 !important;
+    }
+    
+    /* 移动端参考线标签优化 */
+    .recharts-reference-line .recharts-label text {
+        font-size: 10px !important;
+    }
+    
+    /* 移动端图表坐标轴优化 */
+    .chart-container .recharts-cartesian-axis .recharts-cartesian-axis-tick-value {
+        font-size: 9px !important;
+        fill: #666 !important;
+    }
 }
 
 /* 高亮每月需要储蓄 */
@@ -1127,5 +1149,16 @@ body {
 
     .chart-footer {
         gap: 8px;
+    }
+
+    /* 平板端图表文字大小优化 */
+    .recharts-cartesian-axis-tick text {
+        font-size: 10px !important;
+        fill: #666 !important;
+    }
+    
+    .recharts-label text {
+        font-size: 10px !important;
+        fill: #666 !important;
     }
 }
