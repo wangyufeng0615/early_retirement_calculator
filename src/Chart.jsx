@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, ReferenceLine, ReferenceArea } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine, ReferenceArea } from 'recharts';
 
 const Chart = ({ data, earlyRetirementAge, currentAge }) => {
     const [showYAxis, setShowYAxis] = useState(true);
@@ -83,17 +83,6 @@ const Chart = ({ data, earlyRetirementAge, currentAge }) => {
             );
         }
         return null;
-    };
-
-    // 获取不同阶段的颜色
-    const getStrokeColor = (age) => {
-        if (age < currentAge) {
-            return '#95a5a6'; // 过去：灰色
-        } else if (age < earlyRetirementAge) {
-            return '#e67e22'; // 工作期：橙色
-        } else {
-            return '#3498db'; // 退休期：蓝色
-        }
     };
 
     // 根据屏幕尺寸动态配置

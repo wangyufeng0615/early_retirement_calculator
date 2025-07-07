@@ -40,8 +40,6 @@ const Results = (props) => {
                         <td className="highlight">{t('results.monthlySavings')}</td>
                         <td className="highlight">{formatCurrency(props.monthlySavings)}</td>
                     </tr>
-                    {/* 移除"需要的年收入"行 */}
-                    {/* 其他结果 */}
                 </tbody>
             </table>
         </div>
