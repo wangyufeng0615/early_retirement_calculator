@@ -120,7 +120,6 @@ const RetirementCalculator = () => {
                     <Results
                         requiredSavings={requiredSavings}
                         monthlySavings={monthlySavings}
-                        requiredSalary={requiredSalary}
                         savingsProgress={savingsProgress}
                         remainingSavings={remainingSavings}
                         remainingSavingsTodayValue={remainingSavingsTodayValue}
