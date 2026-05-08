@@ -10,7 +10,6 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom'],
           recharts: ['recharts'],
-          katex: ['katex', 'react-katex'],
           i18n: ['i18next', 'react-i18next']
         }
       }
@@ -47,4 +46,4 @@ export default defineConfig({
     include: /src\/.*\.jsx?$/,
     exclude: [],
   },
-}); 
+});

@@ -4,11 +4,9 @@
   "private": true,
   "dependencies": {
     "i18next": "^25.3.0",
-    "katex": "^0.16.11",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^15.5.3",
-    "react-katex": "^3.0.1",
     "recharts": "^3.0.2",
     "web-vitals": "^2.1.4"
   },
@@ -17,6 +15,8 @@
     "deploy": "gh-pages -d build -t true",
     "start": "vite",
     "build": "vite build",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "preview": "vite preview"
   },
   "browserslist": {
@@ -34,7 +34,8 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
     "gh-pages": "^6.1.1",
-    "vite": "^5.0.0"
+    "vite": "^5.0.0",
+    "vitest": "^2.1.9"
   },
   "homepage": "https://retirement.wangyufeng.org"
 }

@@ -1,27 +1,31 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine, ReferenceArea } from 'recharts';
 
-const Chart = ({ data, earlyRetirementAge, currentAge }) => {
+const Chart = ({ data, earlyRetirementAge, legalRetirementAge, currentAge, status }) => {
+    const { t, i18n } = useTranslation();
     const [showYAxis, setShowYAxis] = useState(true);
     const [chartHeight, setChartHeight] = useState(350);
     const [isMobile, setIsMobile] = useState(false);
     const [isTablet, setIsTablet] = useState(false);
+    const locale = i18n.language === 'en' ? 'en-US' : 'zh-CN';
+    const hasData = Array.isArray(data) && data.length > 0;
 
     useEffect(() => {
         const updateChartConfig = () => {
             const width = window.innerWidth;
             const mobile = width <= 600;
             const tablet = width > 600 && width <= 768;
-            
+
             setIsMobile(mobile);
             setIsTablet(tablet);
-            
+
             if (mobile) {
-                setChartHeight(280); // 移动端使用更小的高度
+                setChartHeight(280);
             } else if (tablet) {
-                setChartHeight(320); // 平板端使用中等高度
+                setChartHeight(320);
             } else {
-                setChartHeight(350); // 桌面端使用原始高度
+                setChartHeight(350);
             }
         };
 
@@ -35,49 +39,76 @@ const Chart = ({ data, earlyRetirementAge, currentAge }) => {
     };
 
     const formatCurrency = (value) => {
-        return new Intl.NumberFormat('zh-CN', { style: 'currency', currency: 'CNY', minimumFractionDigits: 0 }).format(value);
+        return new Intl.NumberFormat(locale, {
+            style: 'currency',
+            currency: 'CNY',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        }).format(value || 0);
     };
 
-    const formatYAxis = (value) => {
-        if (value >= 10000000) {
-            return `${(value / 10000000).toFixed(1)}千万`;
-        } else if (value >= 1000000) {
-            return `${(value / 1000000).toFixed(1)}百万`;
-        } else if (value >= 10000) {
-            return `${(value / 10000).toFixed(1)}万`;
-        }
-        return `${(value / 1000).toFixed(0)}千`;
+    const formatCompact = (value) => {
+        return new Intl.NumberFormat(locale, {
+            notation: 'compact',
+            maximumFractionDigits: 1
+        }).format(value || 0);
     };
 
     const CustomTooltip = ({ active, payload, label }) => {
         if (active && payload && payload.length) {
-            const { savings, expenses, assetReturn } = payload[0].payload;
+            const {
+                savings,
+                closingSavings,
+                expenses,
+                pension,
+                netExpenses,
+                assetReturn,
+                contribution,
+                withdrawal
+            } = payload[0].payload;
             const isCurrentAge = label === currentAge;
             const isRetirementAge = label === earlyRetirementAge;
+            const isLegalRetirementAge = label === legalRetirementAge;
 
             return (
-                <div className="custom-tooltip" style={{ 
-                    backgroundColor: 'white', 
-                    padding: isMobile ? '8px' : '12px', 
+                <div className="custom-tooltip" style={{
+                    backgroundColor: 'white',
+                    padding: isMobile ? '8px' : '12px',
                     border: '1px solid #ccc',
                     borderRadius: '8px',
                     boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
                     fontSize: isMobile ? '12px' : '14px',
-                    maxWidth: isMobile ? '250px' : '300px'
+                    maxWidth: isMobile ? '260px' : '320px'
                 }}>
                     <p style={{ margin: '0 0 8px 0', fontWeight: 'bold', color: '#2c3e50' }}>
-                        {`年龄: ${label} 岁`}
-                        {isCurrentAge && <span style={{ color: '#e74c3c', marginLeft: '8px' }}>← 当前</span>}
-                        {isRetirementAge && <span style={{ color: '#3498db', marginLeft: '8px' }}>← 提前退休</span>}
+                        {t('chart.tooltipAge', { age: label })}
+                        {isCurrentAge && <span style={{ color: '#e74c3c', marginLeft: '8px' }}>{t('chart.currentMarker')}</span>}
+                        {isRetirementAge && <span style={{ color: '#3498db', marginLeft: '8px' }}>{t('chart.earlyMarker')}</span>}
+                        {isLegalRetirementAge && <span style={{ color: '#8e44ad', marginLeft: '8px' }}>{t('chart.legalMarker')}</span>}
                     </p>
                     <p style={{ margin: '4px 0', color: '#27ae60', fontWeight: '500' }}>
-                        {`💰 累计储蓄: ${formatCurrency(savings)}`}
+                        {t('chart.tooltipOpeningSavings', { value: formatCurrency(savings) })}
+                    </p>
+                    <p style={{ margin: '4px 0', color: '#1f618d' }}>
+                        {t('chart.tooltipClosingSavings', { value: formatCurrency(closingSavings) })}
                     </p>
                     <p style={{ margin: '4px 0', color: '#8e44ad' }}>
-                        {`💸 年度开销: ${formatCurrency(expenses)}`}
+                        {t('chart.tooltipExpenses', { value: formatCurrency(expenses) })}
+                    </p>
+                    <p style={{ margin: '4px 0', color: '#16a085' }}>
+                        {t('chart.tooltipPension', { value: formatCurrency(pension) })}
+                    </p>
+                    <p style={{ margin: '4px 0', color: '#c0392b' }}>
+                        {t('chart.tooltipNetExpenses', { value: formatCurrency(netExpenses) })}
+                    </p>
+                    <p style={{ margin: '4px 0', color: '#34495e' }}>
+                        {t('chart.tooltipContribution', { value: formatCurrency(contribution) })}
+                    </p>
+                    <p style={{ margin: '4px 0', color: '#7f8c8d' }}>
+                        {t('chart.tooltipWithdrawal', { value: formatCurrency(withdrawal) })}
                     </p>
                     <p style={{ margin: '4px 0 0 0', color: '#3498db', fontSize: isMobile ? '11px' : '13px' }}>
-                        {`📈 投资回报: ${formatCurrency(assetReturn)}`}
+                        {t('chart.tooltipAssetReturn', { value: formatCurrency(assetReturn) })}
                     </p>
                 </div>
             );
@@ -85,7 +116,6 @@ const Chart = ({ data, earlyRetirementAge, currentAge }) => {
         return null;
     };
 
-    // 根据屏幕尺寸动态配置
     const getChartMargin = () => {
         if (isMobile) {
             return { top: 15, right: 5, left: 5, bottom: 35 };
@@ -98,7 +128,7 @@ const Chart = ({ data, earlyRetirementAge, currentAge }) => {
 
     const getYAxisWidth = () => {
         if (!showYAxis) return 15;
-        if (isMobile) return 50; // 增加移动端Y轴宽度
+        if (isMobile) return 50;
         if (isTablet) return 55;
         return 60;
     };
@@ -107,9 +137,9 @@ const Chart = ({ data, earlyRetirementAge, currentAge }) => {
         const baseFontSize = isMobile ? 10 : isTablet ? 11 : 12;
         return {
             dataKey: "age",
-            label: { 
-                value: '年龄 (岁)', 
-                position: 'insideBottomRight', 
+            label: {
+                value: t('chart.xAxisLabel'),
+                position: 'insideBottomRight',
                 offset: isMobile ? -8 : -5,
                 style: { fontSize: baseFontSize, textAnchor: 'end' }
             },
@@ -122,21 +152,21 @@ const Chart = ({ data, earlyRetirementAge, currentAge }) => {
     const getYAxisConfig = () => {
         const baseFontSize = isMobile ? 9 : isTablet ? 10 : 11;
         const labelOffset = isMobile ? 5 : 10;
-        
+
         return {
-            tickFormatter: formatYAxis,
-            label: showYAxis ? { 
-                value: '储蓄金额', 
-                angle: -90, 
-                position: isMobile ? 'outside' : 'insideLeft', 
+            tickFormatter: formatCompact,
+            label: showYAxis ? {
+                value: t('chart.yAxisLabel'),
+                angle: -90,
+                position: isMobile ? 'outside' : 'insideLeft',
                 offset: labelOffset,
-                style: { 
-                    fontSize: baseFontSize, 
+                style: {
+                    fontSize: baseFontSize,
                     textAnchor: 'middle',
                     fill: '#666'
                 }
             } : undefined,
-            tick: showYAxis ? { 
+            tick: showYAxis ? {
                 fontSize: baseFontSize,
                 fill: '#666'
             } : false,
@@ -167,99 +197,125 @@ const Chart = ({ data, earlyRetirementAge, currentAge }) => {
         };
     };
 
+    if (!hasData || status === 'invalid') {
+        return (
+            <div className="chart-empty">
+                {t('chart.emptyState')}
+            </div>
+        );
+    }
+
     return (
         <div className="chart-container">
             <div className="chart-header">
                 <div className="chart-controls">
                     <button onClick={toggleYAxis} className="toggle-button">
-                        {showYAxis ? '🙈 隐藏金额刻度' : '👁️ 显示金额刻度'}
+                        {showYAxis ? t('chart.hideYAxis') : t('chart.showYAxis')}
                     </button>
                 </div>
                 <div className="chart-legend">
                     <div className="legend-item">
                         <span className="legend-dot" style={{backgroundColor: '#e74c3c'}}></span>
-                        <span>当前年龄</span>
+                        <span>{t('chart.currentAge')}</span>
                     </div>
                     <div className="legend-item">
                         <span className="legend-dot" style={{backgroundColor: '#3498db'}}></span>
-                        <span>提前退休</span>
+                        <span>{t('chart.earlyRetirement')}</span>
+                    </div>
+                    <div className="legend-item">
+                        <span className="legend-dot" style={{backgroundColor: '#8e44ad'}}></span>
+                        <span>{t('chart.legalRetirement')}</span>
                     </div>
                 </div>
             </div>
-            
+
             <ResponsiveContainer width="100%" height={chartHeight}>
-                <LineChart 
-                    data={data} 
+                <LineChart
+                    data={data}
                     margin={getChartMargin()}
                 >
                     <XAxis {...getXAxisConfig()} />
                     <YAxis {...getYAxisConfig()} />
                     <Tooltip content={<CustomTooltip />} />
-                    
-                    {/* 背景区域：工作期 */}
-                    <ReferenceArea 
-                        x1={currentAge} 
-                        x2={earlyRetirementAge} 
-                        fill="#e67e22" 
+
+                    <ReferenceArea
+                        x1={currentAge}
+                        x2={earlyRetirementAge}
+                        fill="#e67e22"
                         fillOpacity={0.05}
                     />
-                    
-                    {/* 背景区域：退休期 */}
-                    <ReferenceArea 
-                        x1={earlyRetirementAge} 
-                        x2={data[data.length - 1]?.age || 65} 
-                        fill="#3498db" 
+
+                    <ReferenceArea
+                        x1={earlyRetirementAge}
+                        x2={legalRetirementAge}
+                        fill="#3498db"
                         fillOpacity={0.05}
                     />
-                    
-                    {/* 储蓄变化线 */}
-                    <Line 
-                        type="monotone" 
-                        dataKey="savings" 
-                        stroke="#27ae60" 
+
+                    <ReferenceArea
+                        x1={legalRetirementAge}
+                        x2={data[data.length - 1]?.age || legalRetirementAge}
+                        fill="#8e44ad"
+                        fillOpacity={0.04}
+                    />
+
+                    <Line
+                        type="monotone"
+                        dataKey="savings"
+                        stroke="#27ae60"
                         strokeWidth={isMobile ? 2.5 : 3}
-                        name="累计储蓄" 
+                        name={t('chart.savingsLine')}
                         dot={false}
-                        activeDot={{ 
-                            r: isMobile ? 4 : 6, 
-                            stroke: '#27ae60', 
-                            strokeWidth: 2, 
-                            fill: '#fff' 
+                        activeDot={{
+                            r: isMobile ? 4 : 6,
+                            stroke: '#27ae60',
+                            strokeWidth: 2,
+                            fill: '#fff'
                         }}
                     />
-                    
-                    {/* 当前年龄参考线 */}
+
                     <ReferenceLine {...getReferenceLineConfig(
-                        currentAge, 
-                        `当前 ${currentAge}岁`, 
-                        '#e74c3c', 
+                        currentAge,
+                        t('chart.currentAgeLine', { age: currentAge }),
+                        '#e74c3c',
                         '5 5'
                     )} />
-                    
-                    {/* 提前退休年龄参考线 */}
+
                     <ReferenceLine {...getReferenceLineConfig(
-                        earlyRetirementAge, 
-                        `退休 ${earlyRetirementAge}岁`, 
-                        '#3498db', 
+                        earlyRetirementAge,
+                        t('chart.earlyAgeLine', { age: earlyRetirementAge }),
+                        '#3498db',
                         '8 4',
                         isMobile ? 15 : 20
                     )} />
+
+                    <ReferenceLine {...getReferenceLineConfig(
+                        legalRetirementAge,
+                        t('chart.legalAgeLine', { age: legalRetirementAge }),
+                        '#8e44ad',
+                        '4 4',
+                        isMobile ? 30 : 40
+                    )} />
                 </LineChart>
             </ResponsiveContainer>
-            
+
             <div className="chart-footer">
                 <div className="chart-phases">
                     <div className="phase-item">
                         <span className="phase-color" style={{backgroundColor: '#e67e22'}}></span>
-                        <span className="phase-text">工作储蓄期</span>
+                        <span className="phase-text">{t('chart.workingPhase')}</span>
                     </div>
                     <div className="phase-item">
                         <span className="phase-color" style={{backgroundColor: '#3498db'}}></span>
-                        <span className="phase-text">提前退休期</span>
+                        <span className="phase-text">{t('chart.earlyPhase')}</span>
+                    </div>
+                    <div className="phase-item">
+                        <span className="phase-color" style={{backgroundColor: '#8e44ad'}}></span>
+                        <span className="phase-text">{t('chart.legalPhase')}</span>
                     </div>
                 </div>
                 <p className="chart-hint">
-                    💡 {isMobile ? '长按查看详情' : '点击数据点查看详情'}
+                    {isMobile ? t('chart.mobileHint') : t('chart.desktopHint')}
                 </p>
             </div>
         </div>

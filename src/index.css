@@ -27,9 +27,6 @@ html {
 body {
     font-family: var(--font-family);
     background-color: var(--background-color);
-    background-image: 
-        radial-gradient(circle at 20% 20%, rgba(52, 152, 219, 0.03) 0%, transparent 20%),
-        radial-gradient(circle at 80% 80%, rgba(52, 152, 219, 0.03) 0%, transparent 20%);
     color: #333;
     line-height: 1.6;
     overflow-x: hidden;
@@ -200,7 +197,7 @@ body {
 /* 主要内容区域 */
 .main-content {
     flex: 1;
-    max-width: 600px;
+    max-width: 760px;
     margin: 0 auto;
     padding: 30px 20px;
     width: 100%;
@@ -281,16 +278,23 @@ body {
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--secondary-color);
-    margin: 0 0 10px 0;
+    margin: 0 0 6px 0;
     padding-bottom: 4px;
     border-bottom: 1px solid rgba(52, 152, 219, 0.15);
 }
 
+.section-intro {
+    color: #5f6f7a;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    margin: 0 0 12px 0;
+}
+
 .form-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 6px;
-    align-items: stretch; /* 改为stretch确保高度一致 */
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+    align-items: stretch;
 }
 
 /* 投资参数组特殊布局 - 固定2列 */
@@ -298,122 +302,54 @@ body {
     grid-template-columns: repeat(2, 1fr);
 }
 
-/* Tooltip样式 */
-.tooltip-container {
-    position: relative;
-    display: inline-block;
-}
-
-.tooltip-trigger {
-    cursor: help;
-}
-
-.question-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 16px;
-    height: 16px;
-    background-color: var(--primary-color);
-    color: white;
-    border-radius: 50%;
-    font-size: 12px;
-    font-weight: bold;
-    margin-left: 6px;
-    cursor: help;
-    transition: all 0.2s ease;
-    user-select: none;
-}
-
-.question-icon:hover {
-    background-color: var(--secondary-color);
-    transform: scale(1.1);
-}
-
-.tooltip-content {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--secondary-color);
-    color: white;
-    padding: 10px 15px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    white-space: normal;
-    width: 320px;
-    max-width: 90vw;
-    z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    margin-bottom: 8px;
-}
-
-.tooltip-content::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 6px solid transparent;
-    border-top-color: var(--secondary-color);
-}
-
 /* 调整表单组样式 */
 .form-group {
     display: flex;
     flex-direction: column;
-    min-height: 65px; /* 确保最小高度一致 */
-    padding: 5px 0;
+    min-height: 132px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(45, 62, 80, 0.08);
 }
 
 .form-group label {
     display: flex;
     align-items: center;
-    font-weight: 500;
-    margin-bottom: 4px;
-    color: #2c3e50;
-    font-size: 0.9rem;
-}
-
-/* 重要选项标签的高亮样式 */
-.form-group label.important-label {
     font-weight: 600;
-    font-size: 1rem;
-    color: #e74c3c;
-    text-shadow: 1px 1px 2px rgba(231, 76, 60, 0.2);
-    animation: color-pulse 2s ease-in-out infinite;
+    margin-bottom: 6px;
+    color: #2c3e50;
+    font-size: 0.95rem;
 }
 
-@keyframes color-pulse {
-    0%, 100% {
-        color: #e74c3c;
-    }
-    50% {
-        color: #3498db;
-    }
+.field-note {
+    min-height: 44px;
+    font-size: 0.83rem;
+    color: #64727f;
+    margin: 0 0 10px 0;
+    line-height: 1.4;
 }
 
 .input-group {
     display: flex;
     align-items: center;
-    margin-top: auto; /* 将输入框推到底部对齐 */
-    margin-bottom: 4px;
+    margin-top: auto;
+    margin-bottom: 0;
     justify-content: flex-start;
+    gap: 6px;
 }
 
 .input-group input {
-    flex: 1;
-    height: 32px;
+    width: 100%;
+    flex: 1 1 140px;
+    height: 36px;
     font-size: 0.9rem;
     text-align: left;
     border: 1px solid rgba(206, 212, 218, 0.7);
     border-radius: 4px;
-    margin: 0 4px;
-    max-width: 120px;
+    margin: 0;
+    max-width: 170px;
     background-color: rgba(255, 255, 255, 0.8);
     transition: all 0.2s ease;
-    padding-left: 8px;
+    padding: 0 10px;
 }
 
 .input-group input:focus {
@@ -422,9 +358,14 @@ body {
     box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.1);
 }
 
+.input-group input.input-error {
+    border-color: rgba(231, 76, 60, 0.75);
+    background-color: rgba(253, 237, 236, 0.9);
+}
+
 .input-group button {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     border: 1px solid rgba(52, 152, 219, 0.3);
     background-color: rgba(255, 255, 255, 0.1);
     color: var(--primary-color);
@@ -447,24 +388,35 @@ body {
     box-shadow: 0 2px 12px rgba(52, 152, 219, 0.15);
 }
 
-.note {
-    font-size: 0.85rem;
-    color: #7f8c8d;
-    margin: 4px 0 8px 0;
-    line-height: 1.3;
+.input-unit {
+    color: #5f6f7a;
+    font-size: 0.82rem;
+    white-space: nowrap;
+    min-width: 22px;
 }
 
 .description {
     font-size: 1rem;
     color: #555;
-    line-height: 1.4;
+    line-height: 1.5;
     text-align: left;
 }
 
-.description br {
-    margin-bottom: 6px;
-    content: "";
-    display: block;
+.description h2 {
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    line-height: 1.25;
+    margin-bottom: 8px;
+}
+
+.description p {
+    margin: 0;
+}
+
+.description-note {
+    color: #5f6f7a;
+    font-size: 0.88rem;
+    margin-top: 10px !important;
 }
 
 /* 调整「计算结果」模块的样式 */
@@ -480,10 +432,157 @@ body {
 }
 
 .progress-text {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: bold;
-    color: #27ae60; /* 绿色 */
+    color: #1f7a4d;
     margin-bottom: 10px;
+}
+
+.status-banner {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    border: 1px solid transparent;
+    font-size: 0.92rem;
+    line-height: 1.45;
+}
+
+.status-banner.success {
+    color: #185c37;
+    background: rgba(39, 174, 96, 0.09);
+    border-color: rgba(39, 174, 96, 0.24);
+}
+
+.status-banner.warning {
+    color: #7a4d00;
+    background: rgba(243, 156, 18, 0.11);
+    border-color: rgba(243, 156, 18, 0.3);
+}
+
+.status-banner.error {
+    color: #8a241f;
+    background: rgba(231, 76, 60, 0.1);
+    border-color: rgba(231, 76, 60, 0.28);
+}
+
+.status-banner ul {
+    margin: 4px 0 0 18px;
+}
+
+.result-answer {
+    border-top: 1px solid rgba(52, 152, 219, 0.16);
+    border-bottom: 1px solid rgba(52, 152, 219, 0.16);
+    padding: 16px 0;
+    margin: 14px 0 18px;
+}
+
+.result-answer span {
+    display: block;
+    color: #5f6f7a;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.result-answer strong {
+    display: block;
+    color: #1f6fa8;
+    font-size: 1.75rem;
+    line-height: 1.15;
+    word-break: break-word;
+}
+
+.result-answer p {
+    color: #64727f;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    margin-top: 8px;
+}
+
+.result-section {
+    margin-top: 18px;
+}
+
+.result-section h3 {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    margin-bottom: 8px;
+}
+
+.result-list {
+    border-top: 1px solid rgba(45, 62, 80, 0.08);
+}
+
+.result-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(120px, max-content);
+    gap: 16px;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(45, 62, 80, 0.08);
+}
+
+.result-row-label {
+    display: block;
+    color: #2c3e50;
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.result-row-detail {
+    color: #64727f;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    margin-top: 4px;
+}
+
+.result-row strong {
+    color: #243746;
+    font-size: 1rem;
+    line-height: 1.25;
+    text-align: right;
+    word-break: break-word;
+}
+
+.result-row.emphasis strong {
+    color: #1f6fa8;
+}
+
+.sensitivity-section {
+    margin-top: 18px;
+}
+
+.sensitivity-section h3 {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    margin-bottom: 4px;
+}
+
+.sensitivity-section p {
+    color: #64727f;
+    font-size: 0.84rem;
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+
+.sensitivity-section .result-table {
+    table-layout: auto;
+}
+
+.risk-delta {
+    color: #c0392b;
+    font-weight: 600;
+}
+
+.assumption-note {
+    margin-top: 12px;
+    color: #6c7a86;
+    font-size: 0.82rem;
+    line-height: 1.45;
 }
 
 .progress-bar {
@@ -551,6 +650,7 @@ body {
     font-size: 0.9rem;
     color: #333;
     border: none;
+    vertical-align: middle;
 }
 
 .result-table tr:nth-child(even) {
@@ -762,31 +862,11 @@ body {
         font-size: 0.85rem;
         margin-bottom: 3px;
     }
-    
-    /* 移动端tooltip样式优化 */
-    .tooltip-content {
-        position: fixed;
-        bottom: auto;
-        left: 15px;
-        right: 15px;
-        transform: translateY(-50%);
-        width: auto;
-        max-width: none;
-        margin-bottom: 0;
-        top: 50%;
-        padding: 15px 20px;
-        font-size: 0.9rem;
-    }
-    
-    .tooltip-content::after {
-        display: none;
-    }
-    
-    .question-icon {
-        width: 18px;
-        height: 18px;
-        font-size: 13px;
-        margin-left: 8px;
+
+    .field-note {
+        min-height: auto;
+        font-size: 0.8rem;
+        margin-bottom: 8px;
     }
 
     .input-group {
@@ -796,7 +876,7 @@ body {
     }
 
     .input-group input {
-        max-width: 70%;
+        max-width: none;
         height: 30px;
         font-size: 0.85rem;
         min-width: 0; /* 允许输入框收缩 */
@@ -830,10 +910,24 @@ body {
         font-size: 0.8rem;
     }
 
-    .result-table td {
-        padding: 8px 5px;
-        word-break: break-word;
-        overflow-wrap: break-word;
+	    .result-table td {
+	        padding: 8px 5px;
+	        word-break: break-word;
+	        overflow-wrap: break-word;
+	    }
+
+    .result-row {
+        grid-template-columns: 1fr;
+        gap: 5px;
+        align-items: start;
+    }
+
+    .result-row strong {
+        text-align: left;
+    }
+
+    .result-answer strong {
+        font-size: 1.45rem;
     }
 
     /* 移动端图表样式优化 */
@@ -944,13 +1038,86 @@ body {
 
 /* 公式区域样式 */
 .formula {
-    word-wrap: break-word; /* 允许长单词换行 */
-    overflow-wrap: break-word; /* 现代浏览器的换行属性 */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    color: #2c3e50;
 }
 
-.formula .formula-container {
-    overflow-x: auto; /* 只对公式容器启用水平滚动 */
-    white-space: nowrap; /* 只对公式部分防止换行 */
+.formula-lead {
+    color: #526371;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    margin-bottom: 8px;
+}
+
+.explanation-list {
+    list-style: none;
+    counter-reset: explanation-step;
+    display: grid;
+    gap: 6px;
+}
+
+.explanation-list li {
+    counter-increment: explanation-step;
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    column-gap: 10px;
+    row-gap: 2px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(45, 62, 80, 0.08);
+}
+
+.explanation-list li::before {
+    content: counter(explanation-step);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(52, 152, 219, 0.12);
+    color: #1f6fa8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-top: 1px;
+}
+
+.explanation-list strong {
+    display: block;
+    font-size: 0.92rem;
+    line-height: 1.35;
+}
+
+.explanation-list span {
+    grid-column: 2;
+    color: #64727f;
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+
+.explanation-list.compact li {
+    grid-template-columns: 18px minmax(0, 1fr);
+    column-gap: 8px;
+    padding-bottom: 6px;
+}
+
+.explanation-list.compact li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    margin: 8px auto 0;
+}
+
+.explanation-list.compact span {
+    color: #2c3e50;
+    font-size: 0.88rem;
+}
+
+.formula-note {
+    color: #6c7a86;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    margin-top: 8px;
 }
 
 /* 图表样式优化 */
@@ -961,6 +1128,19 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+}
+
+.chart-empty {
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #6c7a86;
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px dashed rgba(52, 152, 219, 0.25);
+    border-radius: 8px;
+    padding: 20px;
 }
 
 /* 确保 recharts 组件充分利用宽度且不超出容器 */
