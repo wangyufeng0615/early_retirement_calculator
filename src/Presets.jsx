@@ -17,7 +17,8 @@ const Presets = ({ onSelectPreset }) => {
             annualReturn: 7,
             inflationRate: 2,
             expectedSavingsAtLegalRetirement: 200000,
-            monthlyPension: 4000
+            monthlyPension: 4000,
+            planningEndAge: 85
         },
         {
             name: t('presets.profiles.middleIncome'),
@@ -29,7 +30,8 @@ const Presets = ({ onSelectPreset }) => {
             annualReturn: 3,
             inflationRate: 2,
             expectedSavingsAtLegalRetirement: 200000,
-            monthlyPension: 3000
+            monthlyPension: 3000,
+            planningEndAge: 85
         },
         {
             name: t('presets.profiles.extremeLayFlat'),
@@ -41,7 +43,8 @@ const Presets = ({ onSelectPreset }) => {
             annualReturn: 4,
             inflationRate: 2,
             expectedSavingsAtLegalRetirement: 0,
-            monthlyPension: 2000
+            monthlyPension: 2000,
+            planningEndAge: 85
         },
         {
             name: t('presets.profiles.stockGod'),
@@ -53,7 +56,8 @@ const Presets = ({ onSelectPreset }) => {
             annualReturn: 8,
             inflationRate: 2,
             expectedSavingsAtLegalRetirement: 1000000,
-            monthlyPension: 4000
+            monthlyPension: 4000,
+            planningEndAge: 85
         }
     ];
 
