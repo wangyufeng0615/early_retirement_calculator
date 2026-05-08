@@ -227,6 +227,25 @@ describe('calculateRetirement phase modeling', () => {
         });
     });
 
+    it('shows work-period income needed as living costs plus savings', () => {
+        const result = calculate({
+            currentAge: 30,
+            earlyRetirementAge: 32,
+            legalRetirementAge: 34,
+            monthlyExpenses: 1000,
+            currentSavings: 0,
+            annualReturn: 0,
+            inflationRate: 0,
+            expectedSavingsAtLegalRetirement: 0,
+            monthlyPension: 0,
+            planningEndAge: 36
+        });
+
+        expect(result.chartData[0].incomeNeeded).toBe(42000);
+        expect(result.chartData[2].incomeNeeded).toBe(0);
+        expect(result.chartData[2].withdrawal).toBe(12000);
+    });
+
     it('matches a hand-calculated zero-rate plan without pension', () => {
         const result = calculate({
             currentAge: 30,
