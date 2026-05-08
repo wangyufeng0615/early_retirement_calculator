@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine, ReferenceArea } from 'recharts';
 
+const CHART_COPY_VERSION = 'asset-spend-copy-20260508';
+
 const Chart = ({ data, earlyRetirementAge, legalRetirementAge, currentAge, status }) => {
     const { t, i18n } = useTranslation();
     const [showYAxis, setShowYAxis] = useState(true);
@@ -215,7 +217,7 @@ const Chart = ({ data, earlyRetirementAge, legalRetirementAge, currentAge, statu
     }
 
     return (
-        <div className="chart-container">
+        <div className="chart-container" data-copy-version={CHART_COPY_VERSION}>
             <div className="chart-header">
                 <div className="chart-controls">
                     <button onClick={toggleYAxis} className="toggle-button">
