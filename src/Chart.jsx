@@ -57,15 +57,18 @@ const Chart = ({ data, earlyRetirementAge, legalRetirementAge, currentAge, statu
     const CustomTooltip = ({ active, payload, label }) => {
         if (active && payload && payload.length) {
             const {
+                phase,
                 savings,
                 closingSavings,
                 expenses,
                 pension,
-                netExpenses,
                 assetReturn,
                 contribution,
+                incomeNeeded,
                 withdrawal
             } = payload[0].payload;
+            const isWorking = phase === 'working';
+            const isLegalRetirement = phase === 'legalRetirement';
             const isCurrentAge = label === currentAge;
             const isRetirementAge = label === earlyRetirementAge;
             const isLegalRetirementAge = label === legalRetirementAge;
@@ -93,17 +96,23 @@ const Chart = ({ data, earlyRetirementAge, legalRetirementAge, currentAge, statu
                         {t('chart.tooltipClosingSavings', { value: formatCurrency(closingSavings) })}
                     </p>
                     <p style={{ margin: '4px 0', color: '#8e44ad' }}>
-                        {t('chart.tooltipExpenses', { value: formatCurrency(expenses) })}
+                        {t(isWorking ? 'chart.tooltipWorkExpenses' : 'chart.tooltipExpenses', { value: formatCurrency(expenses) })}
                     </p>
-                    <p style={{ margin: '4px 0', color: '#16a085' }}>
-                        {t('chart.tooltipPension', { value: formatCurrency(pension) })}
-                    </p>
-                    <p style={{ margin: '4px 0', color: '#c0392b' }}>
-                        {t('chart.tooltipNetExpenses', { value: formatCurrency(netExpenses) })}
-                    </p>
-                    <p style={{ margin: '4px 0', color: '#34495e' }}>
-                        {t('chart.tooltipContribution', { value: formatCurrency(contribution) })}
-                    </p>
+                    {isLegalRetirement && (
+                        <p style={{ margin: '4px 0', color: '#16a085' }}>
+                            {t('chart.tooltipPension', { value: formatCurrency(pension) })}
+                        </p>
+                    )}
+                    {isWorking && (
+                        <p style={{ margin: '4px 0', color: '#6c3483' }}>
+                            {t('chart.tooltipIncomeNeeded', { value: formatCurrency(incomeNeeded) })}
+                        </p>
+                    )}
+                    {isWorking && (
+                        <p style={{ margin: '4px 0', color: '#34495e' }}>
+                            {t('chart.tooltipContribution', { value: formatCurrency(contribution) })}
+                        </p>
+                    )}
                     <p style={{ margin: '4px 0', color: '#7f8c8d' }}>
                         {t('chart.tooltipWithdrawal', { value: formatCurrency(withdrawal) })}
                     </p>

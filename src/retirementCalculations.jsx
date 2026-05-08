@@ -129,6 +129,7 @@ const calculateTrajectory = (inputs, monthlySavings) => {
         const pension = phase === 'legalRetirement' ? yearlyPension : 0;
         const netExpenses = phase === 'working' ? 0 : Math.max(0, yearlyExpenses - pension);
         const contribution = phase === 'working' ? monthlySavings * 12 : 0;
+        const incomeNeeded = phase === 'working' ? yearlyExpenses + contribution : 0;
         const withdrawal = netExpenses;
         const assetReturn = savings * nominalReturnRate;
         const closingSavings = savings + assetReturn + contribution - withdrawal;
@@ -143,6 +144,7 @@ const calculateTrajectory = (inputs, monthlySavings) => {
             netExpenses,
             assetReturn,
             contribution,
+            incomeNeeded,
             withdrawal
         });
 
@@ -295,6 +297,7 @@ const toDisplayData = (trajectory) => trajectory.map((year) => ({
     netExpenses: floorMoney(year.netExpenses),
     assetReturn: floorMoney(year.assetReturn),
     contribution: floorMoney(year.contribution),
+    incomeNeeded: floorMoney(year.incomeNeeded),
     savingsChange: floorMoney(year.contribution - year.withdrawal),
     withdrawal: floorMoney(year.withdrawal)
 }));
