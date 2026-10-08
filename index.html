@@ -7,8 +7,18 @@
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="提前退休计算器"
+      content="估算提前退休需要准备多少钱、每月要存多少、资产能否撑到规划截止年龄。按当前购买力填写，考虑收益率、通胀和退休金，附逐年资产曲线和压力测试。"
     />
+    <link rel="canonical" href="https://retirement.wangyufeng.org/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="王工的提前退休计算器" />
+    <meta property="og:description" content="估算提前退休需要准备多少钱、每月要存多少、资产能否撑到规划截止年龄。按当前购买力填写，考虑收益率、通胀和退休金，附逐年资产曲线和压力测试。" />
+    <meta property="og:url" content="https://retirement.wangyufeng.org/" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="alternate" type="text/plain" title="llms.txt" href="https://retirement.wangyufeng.org/llms.txt" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"王工的提前退休计算器","alternateName":"Early Retirement Calculator","url":"https://retirement.wangyufeng.org/","description":"估算提前退休需要准备多少钱、每月要存多少、资产能否撑到规划截止年龄。按当前购买力填写，考虑收益率、通胀和退休金，附逐年资产曲线和压力测试。","applicationCategory":"FinanceApplication","operatingSystem":"Any","inLanguage":["zh-CN","en"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"author":{"@type":"Person","name":"王雨峰","url":"https://wangyufeng.org/"}}</script>
+    <script>document.documentElement.classList.add("js")</script>
+    <style>.seo-fallback{max-width:720px;margin:0 auto;padding:24px 16px;font:16px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}.js .seo-fallback{display:none}</style>
     <!-- Content Security Policy -->
     <meta http-equiv="Content-Security-Policy" content="
       default-src 'self';
@@ -32,7 +42,27 @@
     <link rel="stylesheet" crossorigin href="/assets/index-DzqP9kbr.css">
   </head>
   <body>
-    <noscript>您需要启用 JavaScript 来运行此应用。</noscript>
+    <main class="seo-fallback">
+      <h1>王工的提前退休计算器</h1>
+      <p>估算：如果从某个年龄停止工作，当前需要准备多少钱、每月需要存多少钱，资产能否撑到规划截止年龄。页面在浏览器里计算，需要开启 JavaScript；支持中文和英文。</p>
+      <h2>计算口径</h2>
+      <ul>
+        <li>金额按当前购买力填写；未来生活费、退休金和法定退休时想保留的钱按通胀估算。</li>
+        <li>工作期：生活费由工作收入支付，额外储蓄存入资产。</li>
+        <li>提前退休后：不再计入工作收入，生活费从资产里支出。</li>
+        <li>法定退休后：退休金先支付生活费，不够的部分再从资产里支出。</li>
+        <li>结果是按固定收益率和固定通胀率做的年度估算，不构成投资建议。</li>
+      </ul>
+      <h2>主要结果</h2>
+      <ul>
+        <li>提前退休时需要准备的资产。</li>
+        <li>从当前年龄到提前退休前，每月需要储蓄的金额。</li>
+        <li>工作期所需月收入下限。</li>
+        <li>法定退休时和规划截止年龄的预计剩余资产。</li>
+        <li>压力测试和逐年资产曲线。</li>
+      </ul>
+      <p>作者：<a href="https://wangyufeng.org/">王雨峰</a>。源码：<a href="https://github.com/wangyufeng0615/early_retirement_calculator">GitHub</a>。</p>
+    </main>
     <div id="root"></div>
   </body>
 </html> 
